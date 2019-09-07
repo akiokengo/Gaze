@@ -4,7 +4,6 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 
-/// <reference types="jquery"/>
 
 interface ModalOptions {
     backdrop?: boolean|string;
