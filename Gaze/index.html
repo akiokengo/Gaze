@@ -4,14 +4,29 @@
 <head>
     <meta charset="utf-8" />
     <title>TypeScript HTML App</title>
-    <link rel="stylesheet" href="app.css" type="text/css" />
+    <!--バンドル化したCSS-->
+    <link rel="stylesheet" href="Content/gaze.css" type="text/css" />
+
+    <!--バンドル化したJS-->
     <script src="Scripts/gaze.js"></script>
+    <script src="app.js"></script>
 </head>
-<body>
-    <input type="button" style="position: absolute; left: 80px; top: 150px; height:100px; width:120px" onclick="window.history.back();" value="前のページに戻る" />
-    <input type="button" style="position: absolute; left: 80px; top: 300px; height:100px; width:120px" onclick="window.history.forward();" value="次のページに進む" />
-    <input type="button" style="position: absolute; left: 80px; top: 450px; height:100px; width:120px" value="機能停止" />
-    <input type="button" style="position: absolute; left: 80px; top: 600px; height:100px; width:120px" value="機能再開" />
-    <iframe src="https://www.google.com/search?igu=1" height="900" width="1350" style="position: absolute; left: 500px; top: 0px" 　></iframe>
+<body style="overflow:hidden">
+    <div class="container">
+        <!--row のスタイルで行を指定-->
+        <div class="row">
+            <!-- col-xx-NN の指定で列を分割する。col-sm-2 で 12分割中、2分割 -->
+            <div class="col-sm-3">
+                <input type="button" class="row btn std-btn" id="BackButton" onclick="window.history.back();" value="前のページに戻る" />
+                <input type="button" class="row btn std-btn" id="ForwardButton" onclick="window.history.forward();" value="次のページに進む" />
+                <input type="button" class="row btn std-btn" id="PauseButton" value="機能停止" />
+                <input type="button" class="row btn std-btn" id="ResumeButton" value="機能再開" />
+            </div>
+            <!-- col-xx-NN の指定で列を分割する。col-sm-2 で 12分割中、2分割 -->
+            <div class="col-sm-9 iframe-container">
+                <iframe src="https://www.google.com/search?igu=1" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

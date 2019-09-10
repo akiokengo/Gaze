@@ -1,28 +1,52 @@
-﻿class Greeter {
-    element: HTMLElement;
-    span: HTMLElement;
-    timerToken: number;
+﻿window.onload = () => {
+    let view = new Gaze.IndexView();
+    view.Bind();
+};
 
-    constructor(element: HTMLElement) {
-        this.element = element;
-        this.element.innerHTML += "The time is: ";
-        this.span = document.createElement('span');
-        this.element.appendChild(this.span);
-        this.span.innerText = new Date().toUTCString();
+
+namespace Gaze {
+
+    /**
+     * dom とのイベント紐付けの役割クラス
+     * */
+    export class IndexView {
+        public ViewModel: IndexViewModel;
+        public Bind() {
+            this.ViewModel = new IndexViewModel();
+
+
+   
+            let pauseButton = document.getElementById("PauseButton");
+            pauseButton.onclick = e => {
+                this.ViewModel.Pause();
+            };
+
+            let resumeButton = document.getElementById("ResumeButton");
+            resumeButton.onclick = e => {
+                this.ViewModel.Resume();
+            };
+
+
+
+
+
+
+        }
     }
 
-    start() {
-        this.timerToken = setInterval(() => this.span.innerHTML = new Date().toUTCString(), 500);
+
+    /**
+     * ロジッククラス
+     * */
+    export class IndexViewModel {
+        public Pause() {
+
+        }
+        public Resume() {
+
+        }
+
     }
 
-    stop() {
-        clearTimeout(this.timerToken);
-    }
 
 }
-
-window.onload = () => {
-    var el = document.getElementById('content');
-    var greeter = new Greeter(el);
-    greeter.start();
-};

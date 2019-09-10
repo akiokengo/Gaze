@@ -1,15 +1,14 @@
-[
+ï»¿[
   {
     "outputFileName": "Scripts/gaze.js",
     "inputFiles": [
-      /* ŠO•”ƒ‰ƒCƒuƒ‰ƒŠ */
-      "Scripts/webgazer/Gaze/lz-string-1.3.3.js",
-      "Scripts/webgazer/collections.js",
-      "Scripts/webgazer/clientdetection.js",
+      /* å¤–éƒ¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒª */
+      "Scripts/lz-string-1.3.3.js",
+      "Scripts/jquery-3.4.1.js",
 
       /* Polyfill */
 
-      /* DomBehind/Typescript.Net */
+      /* webgazer */
       "Scripts/webgazer/dependencies/js-objectdetect/js/objectdetect.js",
       "Scripts/webgazer/dependencies/js-objectdetect/js/objectdetect.eye.js  ",
       "Scripts/webgazer/dependencies/js-objectdetect/js/objectdetect.frontalface_alt.js  ",
@@ -44,14 +43,19 @@
       "Scripts/webgazer/src/util.js",
       "Scripts/webgazer/src/precision.js",
       "Scripts/webgazer/src/webgazer.js"
-
-
-
     ],
     "minify": {
       "enabled": true,
       "commentMode": "all"
     },
     "sourceMap": true
+  },
+  {
+    "inputFiles": [
+      "Content/bootstrap-theme.css",
+      "Content/bootstrap.css",
+      "app.css"
+    ],
+    "outputFileName": "Content/gaze.css"
   }
 ]
