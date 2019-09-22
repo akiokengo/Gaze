@@ -64,6 +64,8 @@
     <Content Include="Content\gaze.min.css">
       <DependentUpon>gaze.css</DependentUpon>
     </Content>
+    <Content Include="css\style.css" />
+    <Content Include="fonts\calibration.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -75,6 +77,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="bundleconfig.json" />
     <Content Include="package.json" />
+    <Content Include="webgazer.js" />
     <None Include="packages.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -158,17 +161,24 @@
     <Content Include="Scripts\webgazer\dependencies\tracking.js\tracking.js" />
     <Content Include="Scripts\webgazer\dependencies\utils.js" />
     <Content Include="Scripts\webgazer\src\blinkDetector.js" />
+    <Content Include="Scripts\webgazer\src\calibration.js" />
     <Content Include="Scripts\webgazer\src\clmGaze.js" />
+    <Content Include="Scripts\webgazer\src\jquery.min.js" />
     <Content Include="Scripts\webgazer\src\js_objectdetectGaze.js" />
     <Content Include="Scripts\webgazer\src\linearReg.js" />
+    <Content Include="Scripts\webgazer\src\main.js" />
     <Content Include="Scripts\webgazer\src\mat.js" />
     <Content Include="Scripts\webgazer\src\precision.js" />
+    <Content Include="Scripts\webgazer\src\precision_calculation.js" />
+    <Content Include="Scripts\webgazer\src\precision_store_points.js" />
     <Content Include="Scripts\webgazer\src\pupil.js" />
     <Content Include="Scripts\webgazer\src\regression.js" />
+    <Content Include="Scripts\webgazer\src\resize_canvas.js" />
     <Content Include="Scripts\webgazer\src\ridgeReg.js" />
     <Content Include="Scripts\webgazer\src\ridgeRegThreaded.js" />
     <Content Include="Scripts\webgazer\src\ridgeWeightedReg.js" />
     <Content Include="Scripts\webgazer\src\ridgeWorker.js" />
+    <Content Include="Scripts\webgazer\src\sweetalert.min.js" />
     <Content Include="Scripts\webgazer\src\trackingjsGaze.js" />
     <Content Include="Scripts\webgazer\src\util.js" />
     <Content Include="Scripts\webgazer\src\webgazer.js" />

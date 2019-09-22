@@ -42,7 +42,14 @@
       "Scripts/webgazer/src/ridgeRegThreaded.js",
       "Scripts/webgazer/src/util.js",
       "Scripts/webgazer/src/precision.js",
-      "Scripts/webgazer/src/webgazer.js"
+      "Scripts/webgazer/src/webgazer.js",
+      "Scripts/webgazer/src/calibration.js",
+      "Scripts/webgazer/src/main.js",
+      "Scripts/webgazer/src/precision_calculation.js",
+      "Scripts/webgazer/src/precision_store_points.js",
+      "Scripts/webgazer/src/resize_canvas.js",
+      "Scripts/webgazer/src/jquery.min.js",
+      "Scripts/webgazer/src/sweetalert.min.js"
     ],
     "minify": {
       "enabled": true,
