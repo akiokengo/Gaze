@@ -64,7 +64,7 @@
     <Content Include="Content\gaze.min.css">
       <DependentUpon>gaze.css</DependentUpon>
     </Content>
-    <Content Include="css\style.css" />
+    <Content Include="Content\style.css" />
     <Content Include="fonts\calibration.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
