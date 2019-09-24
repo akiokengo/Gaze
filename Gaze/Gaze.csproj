@@ -65,7 +65,7 @@
       <DependentUpon>gaze.css</DependentUpon>
     </Content>
     <Content Include="Content\style.css" />
-    <Content Include="fonts\calibration.png" />
+    <Content Include="fonts\calibraion.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
