@@ -14,7 +14,7 @@
       "Scripts/webgazer/precision_calculation.js",
       "Scripts/webgazer/precision_store_points.js",
       "Scripts/webgazer/reize_canvas.js",
-      "Scripts/webgazer/sweetalert.js",
+      "Scripts/webgazer/sweetalert.min.js",
       "Scripts/bootstrap.min.js"
     ],
     "minify": {
