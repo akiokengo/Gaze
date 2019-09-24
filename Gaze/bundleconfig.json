@@ -10,6 +10,7 @@
 
       /* webgazer */
       "Scripts/webgazer/webgazer.js"
+
     ],
     "minify": {
       "enabled": true,

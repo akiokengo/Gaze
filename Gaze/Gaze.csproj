@@ -80,9 +80,15 @@
     <Content Include="Scripts\gaze.min.js">
       <DependentUpon>gaze.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\webgazer\calibration.js" />
+    <Content Include="Scripts\webgazer\jquery.min.js" />
+    <Content Include="Scripts\webgazer\main.js" />
+    <Content Include="Scripts\webgazer\precision_calculation.js" />
+    <Content Include="Scripts\webgazer\precision_store_points.js" />
+    <Content Include="Scripts\webgazer\resize_canvas.js" />
+    <Content Include="Scripts\webgazer\sweetalert.min.js" />
     <Content Include="Scripts\webgazer\webgazer.js" />
     <Content Include="Scripts\webgazer\webgazer.min.js" />
-    <Content Include="webgazer.js" />
     <None Include="packages.config" />
     <Content Include="Scripts\gaze.min.js.map">
       <DependentUpon>gaze.min.js</DependentUpon>

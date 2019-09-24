@@ -1,22 +1,27 @@
-﻿<!DOCTYPE html>
-
-<html lang="en">
+﻿
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title>TypeScript HTML App</title>
-    <!--バンドル化したCSS-->
-    <link rel="stylesheet" href="Content/gaze.css" type="text/css" />
-
-    <!--学習画面css-->
-    <link rel="stylesheet" type="text/css" href="Content/style.css">
-
-    <script async type="text/javascript" src="./webgazer.js"></script>
-    <!--バンドル化したJS-->
-    <script src="Scripts/gaze.js"></script>
-    <script src="app.js"></script>
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+    <TITLE>WebGazer Demo</TITLE>
+    <link rel="stylesheet" type="text/css" href="./Content/style.css">
+    <link rel="stylesheet" href="./Content/bootstrap.min.css">
 </head>
 <body LANG="en-US" LINK="#0000ff" DIR="LTR">
     <canvas id="plotting_canvas" width="500" height="500" style="cursor:crosshair;"></canvas>
+
+    <!--バンドル化したCSS-->
+    <link rel="stylesheet" href="Content/gaze.css" type="text/css" />
+    <!--バンドル化したJS-->
+    <script src="Scripts/gaze.js"></script>
+    <script src="app.js"></script>
+    <!--学習画面script-->
+    <script src="./Scripts/webgazer/jquery.min.js"></script>
+    <script src="./Scripts/webgazer/sweetalert.min.js"></script>
+    <script src="./Scripts/webgazer/calibration.js"></script>
+    <script src="./Scripts/webgazer/main.js"></script>
+    <script src="./Scripts/webgazer/precision_calculation.js"></script>
+    <script src="./Scripts/webgazer/precision_store_points.js"></script>
 
     <nav id="webgazerNavbar" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -72,7 +77,8 @@
     </div>
 
     <!-- Latest compiled JavaScript -->
-
+    <script src="./Scripts/webgazer/resize_canvas.js"></script>
+    <script src="./Scripts/bootstrap.min.js"></script>
 
 </body>
 </html>
