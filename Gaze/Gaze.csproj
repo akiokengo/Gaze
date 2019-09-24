@@ -89,6 +89,7 @@
     <Content Include="Scripts\webgazer\sweetalert.min.js" />
     <Content Include="Scripts\webgazer\webgazer.js" />
     <Content Include="Scripts\webgazer\webgazer.min.js" />
+    <Content Include="webgazer.html" />
     <None Include="packages.config" />
     <Content Include="Scripts\gaze.min.js.map">
       <DependentUpon>gaze.min.js</DependentUpon>
