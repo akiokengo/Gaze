@@ -5,12 +5,17 @@
       /* 外部ライブラリ */
       "Scripts/lz-string-1.3.3.js",
       "Scripts/jquery-3.4.1.js",
-
       /* Polyfill */
 
       /* webgazer */
-      "Scripts/webgazer/webgazer.js"
-
+      "Scripts/webgazer/webgazer.js",
+      "Scripts/webgazer/calibration.js",
+      "Scripts/webgazer/main.js",
+      "Scripts/webgazer/precision_calculation.js",
+      "Scripts/webgazer/precision_store_points.js",
+      "Scripts/webgazer/reize_canvas.js",
+      "Scripts/webgazer/sweetalert.js",
+      "Scripts/bootstrap.min.js"
     ],
     "minify": {
       "enabled": true,
