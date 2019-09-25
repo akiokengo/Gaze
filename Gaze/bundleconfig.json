@@ -13,7 +13,7 @@
       "Scripts/webgazer/main.js",
       "Scripts/webgazer/precision_calculation.js",
       "Scripts/webgazer/precision_store_points.js",
-      "Scripts/webgazer/reize_canvas.js",
+      "Scripts/webgazer/resize_canvas.js",
       "Scripts/webgazer/sweetalert.min.js",
       "Scripts/bootstrap.min.js"
     ],
