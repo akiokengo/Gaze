@@ -1,6 +1,5 @@
 ﻿[
   {
-    "outputFileName": "Scripts/gaze.js",
     "inputFiles": [
       /* 外部ライブラリ */
       "Scripts/lz-string-1.3.3.js",
@@ -21,6 +20,7 @@
       "enabled": true,
       "commentMode": "all"
     },
+    "outputFileName": "Scripts/gaze.js",
     "sourceMap": true
   },
   {
