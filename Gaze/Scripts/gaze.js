@@ -22831,7 +22831,8 @@ $(document).ready(function(){
                       }).then(isConfirm => {
                           if (isConfirm){
                             //clear the calibration & hide the last middle button
-                            ClearCanvas();
+                              ClearCanvas();
+                              location.href = 'webgazer.html';
                           } else {
                             //use restart function to restart the calibration
                             ClearCalibration();
@@ -22906,8 +22907,8 @@ window.onload = function() {
 };
 
 window.onbeforeunload = function() {
-    //webgazer.end(); //Uncomment if you want to save the data even if you reload the page.
-    window.localStorage.clear(); //Comment out if you want to save data across different sessions
+    webgazer.end(); //Uncomment if you want to save the data even if you reload the page.
+    //window.localStorage.clear(); //Comment out if you want to save data across different sessions
 }
 
 /**
