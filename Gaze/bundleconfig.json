@@ -17,8 +17,8 @@
       "Scripts/bootstrap.min.js"
     ],
     "minify": {
-      "enabled": true,
-      "commentMode": "all"
+      "commentMode": "all",
+      "enabled": true
     },
     "outputFileName": "Scripts/gaze.js",
     "sourceMap": true
