@@ -1,7 +1,7 @@
-﻿window.onload = () => {
+﻿window.addEventListener('onload', () => {
     let view = new Gaze.IndexView();
     view.Bind();
-};
+});
 
 
 namespace Gaze {

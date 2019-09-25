@@ -1,7 +1,7 @@
-window.onload = function () {
+window.addEventListener('onload', function () {
     var view = new Gaze.IndexView();
     view.Bind();
-};
+});
 var Gaze;
 (function (Gaze) {
     /**
