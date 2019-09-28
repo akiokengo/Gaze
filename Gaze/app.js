@@ -11,15 +11,16 @@ var Gaze;
         function IndexView() {
         }
         IndexView.prototype.Bind = function () {
+            var _this = this;
             this.ViewModel = new IndexViewModel();
-            /*let pauseButton = document.getElementById("PauseButton");
-            pauseButton.onclick = e => {
-                this.ViewModel.Pause();
-            }
-            let resumeButton = document.getElementById("ResumeButton");
-            resumeButton.onclick = e => {
-                this.ViewModel.Resume();
-            };*/
+            var pauseButton = document.getElementById("PauseButton");
+            pauseButton.onclick = function (e) {
+                _this.ViewModel.Pause();
+            };
+            var resumeButton = document.getElementById("ResumeButton");
+            resumeButton.onclick = function (e) {
+                _this.ViewModel.Resume();
+            };
         };
         return IndexView;
     }());
