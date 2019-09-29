@@ -4,10 +4,7 @@ window.addEventListener('onload', function () {
 });
 var Gaze;
 (function (Gaze) {
-    /**
-     * dom とのイベント紐付けの役割クラス
-     * */
-    var IndexView = /** @class */ (function () {
+    var IndexView = (function () {
         function IndexView() {
         }
         IndexView.prototype.Bind = function () {
@@ -25,10 +22,7 @@ var Gaze;
         return IndexView;
     }());
     Gaze.IndexView = IndexView;
-    /**
-     * ロジッククラス
-     * */
-    var IndexViewModel = /** @class */ (function () {
+    var IndexViewModel = (function () {
         function IndexViewModel() {
         }
         IndexViewModel.prototype.Pause = function () {
@@ -39,4 +33,3 @@ var Gaze;
     }());
     Gaze.IndexViewModel = IndexViewModel;
 })(Gaze || (Gaze = {}));
-//# sourceMappingURL=app.js.map

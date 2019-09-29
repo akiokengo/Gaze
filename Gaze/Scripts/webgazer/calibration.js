@@ -106,7 +106,7 @@ $(document).ready(function(){
                           if (isConfirm){
                             //clear the calibration & hide the last middle button
                               ClearCanvas();
-                              location.href = 'webgazer.html';
+                              //location.href = 'webgazer.html';
                           } else {
                             //use restart function to restart the calibration
                             ClearCalibration();

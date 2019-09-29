@@ -9640,8 +9640,8 @@ var mosseFilterResponses = function() {
     webgazer.reg.RidgeReg.prototype.setData = function(data) {
         for (var i = 0; i < data.length; i++) {
             //TODO this is a kludge, needs to be fixed
-            data[i].eyes.left.patch = new ImageData(new Uint8ClampedArray(data[i].eyes.left.patch), data[i].eyes.left.width, data[i].eyes.left.height);
-            data[i].eyes.right.patch = new ImageData(new Uint8ClampedArray(data[i].eyes.right.patch), data[i].eyes.right.width, data[i].eyes.right.height);
+            data[i].eyes.left.patch = new ImageData(new Uint8ClampedArray(Object.values(data[i].eyes.left.patch.data)), data[i].eyes.left.width, data[i].eyes.left.height);
+            data[i].eyes.right.patch = new ImageData(new Uint8ClampedArray(Object.values(data[i].eyes.right.patch.data)), data[i].eyes.right.width, data[i].eyes.right.height);
             this.addData(data[i].eyes, data[i].screenPos, data[i].type);
         }
     };
@@ -10838,7 +10838,18 @@ function store_points(x, y, k) {
      * Loads the global data and passes it to the regression model
      */
     function loadGlobalData() {
-        var storage = JSON.parse(window.localStorage.getItem(localstorageLabel)) || defaults;
+
+        var storage = defaults;
+        try {
+            var data = LZString.decompress(window.localStorage.getItem(localstorageLabel));
+            var parsedObj = JSON.parse(data);
+            if (parsedObj) {
+                storage = parsedObj;
+            }
+        } catch (err) {
+            console.warn('Cannot load the global data. WebGazer will use the default data.');
+        }
+
         settings = storage.settings;
         data = storage.data;
         for (var reg in regs) {
@@ -10854,7 +10865,7 @@ function store_points(x, y, k) {
             'settings': settings,
             'data': regs[0].getData() || data
         };
-        window.localStorage.setItem(localstorageLabel, JSON.stringify(storage));
+        window.localStorage.setItem(localstorageLabel, LZString.compress(JSON.stringify(storage)));
         //TODO data should probably be stored in webgazer object instead of each regression model
         //     -> requires duplication of data, but is likely easier on regression model implementors
     }
@@ -11078,8 +11089,9 @@ function store_points(x, y, k) {
         //webgazer.stopVideo(); // uncomment if you want to stop the video from streaming
 
         //remove video element and canvas
-        document.body.removeChild(videoElement);
-        document.body.removeChild(videoElementCanvas);
+        //TODO: 学習画面からWeb閲覧画面へ遷移するとき、カメラが消えてしまうのは問題と中村君から指摘あり。コメントアウトして動作検証する。
+        //document.body.removeChild(videoElement);
+        //document.body.removeChild(videoElementCanvas);
 
         setGlobalData();
         return webgazer;
