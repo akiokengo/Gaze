@@ -10860,12 +10860,61 @@ function store_points(x, y, k) {
    /**
     * Constructs the global storage object and adds it to local storage
     */
+
+    //データベース定義
+    var dbName = 'gazeDB';
+    var openReq = indexedDB.open(dbName);
+
+    openReq.onupgradeneeded = function (event) {
+        //onupgradeneededは、DBのバージョン更新(DBの新規作成も含む)時のみ実行
+        console.log('db upgrade');
+    }
+    openReq.onsuccess = function (event) {
+        //onupgradeneededの後に実行。更新がない場合はこれだけ実行
+        console.log('db open success');
+        var db = event.target.result;
+        // 接続を解除する
+        db.close();
+    }
+    openReq.onerror = function (event) {
+        // 接続に失敗
+        console.log('db open error');
+    }
+    
+    var storeName = 'gazeStore';
+    var openReq = indexedDB.open(dbName, 1);
+    // オブジェクトストアの作成・削除はDBの更新時しかできないので、バージョンを指定して更新
+
+    openReq.onupgradeneeded = function (event) {
+        var db = event.target.result;
+        db.createObjectStore(storeName, { keyPath: 'id' })
+    }
+
+    //学習したデータをindexDBに保存
     function setGlobalData() {
         var storage = {
             'settings': settings,
             'data': regs[0].getData() || data
         };
-        window.localStorage.setItem(localstorageLabel, LZString.compress(JSON.stringify(storage)));
+        var openReq = indexedDB.open(dbName);
+
+        openReq.onsuccess = function (event) {
+            var db = event.target.result;
+            var trans = db.transaction(storeName, 'readwrite');
+            var store = trans.objectStore(storeName);
+            var putReq = store.put(LZString.compress(JSON.stringify(storage)));
+
+            putReq.onsuccess = function () {
+                console.log('put data success');
+            }
+
+            trans.oncomplete = function () {
+                // トランザクション完了時(putReq.onsuccessの後)に実行
+                console.log('transaction complete');
+            }
+        }
+
+        //window.localStorage.setItem(localstorageLabel, LZString.compress(JSON.stringify(storage)));
         //TODO data should probably be stored in webgazer object instead of each regression model
         //     -> requires duplication of data, but is likely easier on regression model implementors
     }
