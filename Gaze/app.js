@@ -1,7 +1,3 @@
-window.addEventListener('onload', function () {
-    var view = new Gaze.IndexView();
-    view.Bind();
-});
 var Gaze;
 (function (Gaze) {
     /**
@@ -13,13 +9,9 @@ var Gaze;
         IndexView.prototype.Bind = function () {
             var _this = this;
             this.ViewModel = new IndexViewModel();
-            var pauseButton = document.getElementById("PauseButton");
-            pauseButton.onclick = function (e) {
-                _this.ViewModel.Pause();
-            };
-            var resumeButton = document.getElementById("ResumeButton");
-            resumeButton.onclick = function (e) {
-                _this.ViewModel.Resume();
+            var restartButton = document.getElementById("ReStartButton");
+            restartButton.onclick = function (e) {
+                _this.ViewModel.InvokeRestart();
             };
         };
         return IndexView;
@@ -31,9 +23,8 @@ var Gaze;
     var IndexViewModel = /** @class */ (function () {
         function IndexViewModel() {
         }
-        IndexViewModel.prototype.Pause = function () {
-        };
-        IndexViewModel.prototype.Resume = function () {
+        IndexViewModel.prototype.InvokeRestart = function () {
+            Restart();
         };
         return IndexViewModel;
     }());
