@@ -93,6 +93,8 @@
     <Content Include="Scripts\gaze.min.js">
       <DependentUpon>gaze.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\model\model.js" />
+    <Content Include="Scripts\polifil.js" />
     <Content Include="Scripts\Webgazerview.js" />
     <Content Include="Scripts\webgazer\calibration.js" />
     <Content Include="Scripts\webgazer\jquery.min.js" />
@@ -140,6 +142,8 @@
     <TypeScriptCompile Include="Scripts\Extensions\StringExtensions.ts" />
     <TypeScriptCompile Include="Scripts\Extensions\TypedConstructor.ts" />
     <TypeScriptCompile Include="Scripts\indexDB.ts" />
+    <TypeScriptCompile Include="Scripts\model\model.ts" />
+    <TypeScriptCompile Include="Scripts\polifil.ts" />
     <TypeScriptCompile Include="webgazer.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\bootstrap\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />

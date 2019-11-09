@@ -20,7 +20,9 @@
       "Scripts/Extensions/TypedConstructor.js",
       "Scripts/Extensions/StringExtensions.js",
       "Scripts/Extensions/ObjectExtensions.js",
-      "Scripts/Extensions/EnumerableExtensions.js"
+      "Scripts/Extensions/EnumerableExtensions.js",
+      "IndexedDBHelper.js"
+
     ],
     "minify": {
       "commentMode": "all",

@@ -1,31 +1,26 @@
 var Gaze;
 (function (Gaze) {
-    var Webgazerviewmodel = /** @class */ (function () {
-        function Webgazerviewmodel() {
-        }
-        return Webgazerviewmodel;
-    }());
+    class Webgazerviewmodel {
+    }
     Gaze.Webgazerviewmodel = Webgazerviewmodel;
-    var Webgazerview = /** @class */ (function () {
-        function Webgazerview() {
-        }
-        Webgazerview.prototype.Bind = function () {
+    class Webgazerview {
+        Bind() {
             this.Viewmodel = new Webgazerviewmodel();
-            var forwardButton = document.getElementById("ForwardButton");
-            var backButton = document.getElementById("BackButton");
-            var resumeButton = document.getElementById("ResumeButton");
+            let forwardButton = document.getElementById("ForwardButton");
+            let backButton = document.getElementById("BackButton");
+            let resumeButton = document.getElementById("ResumeButton");
             if (forwardButton) {
-                forwardButton.onclick = function (e) {
+                forwardButton.onclick = e => {
                     window.history.forward();
                 };
             }
             if (backButton) {
-                backButton.onclick = function (e) {
+                backButton.onclick = e => {
                     window.history.back();
                 };
             }
             if (resumeButton) {
-                resumeButton.onclick = function (e) {
+                resumeButton.onclick = e => {
                     if (resumeButton.value == "機能停止") {
                         resumeButton.value = "機能再開";
                     }
@@ -34,9 +29,8 @@ var Gaze;
                     }
                 };
             }
-        };
-        return Webgazerview;
-    }());
+        }
+    }
     Gaze.Webgazerview = Webgazerview;
 })(Gaze || (Gaze = {}));
 //# sourceMappingURL=Webgazerview.js.map

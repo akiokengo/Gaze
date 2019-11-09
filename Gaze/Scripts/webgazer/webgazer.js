@@ -10899,23 +10899,31 @@ function store_points(x, y, k) {
             'settings': settings,
             'data': regs[0].getData() || data
         };
-        var openReq = indexedDB.open(dbName);
 
-        openReq.onsuccess = function (event) {
-            var db = event.target.result;
-            var trans = db.transaction(storeName, 'readwrite');
-            var store = trans.objectStore(storeName);
-            var putReq = store.put(LZString.compress(JSON.stringify(storage)));
+        var lz = LZString.compress(JSON.stringify(storage));
 
-            putReq.onsuccess = function () {
-                console.log('put data success');
-            }
+        Savelz(lz);
 
-            trans.oncomplete = function () {
-                // トランザクション完了時(putReq.onsuccessの後)に実行
-                console.log('transaction complete');
-            }
-        }
+        //var openReq = indexedDB.open(dbName);
+
+        //openReq.onsuccess = function (event) {
+        //    var lz = LZString.compress(JSON.stringify(storage));
+
+        //    Savelz(lz);
+            //var db = event.target.result;
+            //var trans = db.transaction(storeName, 'readwrite');
+            //var store = trans.objectStore(storeName);
+            //var putReq = store.put(lz);
+
+            //putReq.onsuccess = function () {
+            //    console.log('put data success');
+            //}
+
+            //trans.oncomplete = function () {
+            //    // トランザクション完了時(putReq.onsuccessの後)に実行
+            //    console.log('transaction complete');
+            //}
+        //}
 
         //window.localStorage.setItem(localstorageLabel, LZString.compress(JSON.stringify(storage)));
         //TODO data should probably be stored in webgazer object instead of each regression model
