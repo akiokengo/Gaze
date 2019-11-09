@@ -10,9 +10,11 @@ var Gaze;
             var _this = this;
             this.ViewModel = new IndexViewModel();
             var restartButton = document.getElementById("ReStartButton");
-            restartButton.onclick = function (e) {
-                _this.ViewModel.InvokeRestart();
-            };
+            if (restartButton) {
+                restartButton.onclick = function (e) {
+                    _this.ViewModel.InvokeRestart();
+                };
+            }
         };
         return IndexView;
     }());

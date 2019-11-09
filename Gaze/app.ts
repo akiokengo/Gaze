@@ -9,10 +9,12 @@
             this.ViewModel = new IndexViewModel();
 
             let restartButton = document.getElementById("ReStartButton");
+            if (restartButton) {
+                restartButton.onclick = e => {
+                    this.ViewModel.InvokeRestart();
+                };
+            }
 
-            restartButton.onclick = e => {
-                this.ViewModel.InvokeRestart();
-            };
         }
     }
 

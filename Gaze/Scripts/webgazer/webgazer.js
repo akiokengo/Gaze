@@ -10623,6 +10623,9 @@ function store_points(x, y, k) {
     */
     function drawCoordinates(colour,x,y){
         var ctx = document.getElementById("plotting_canvas").getContext('2d');
+        if (!ctx) {
+        return;
+        }
         ctx.fillStyle = colour; // Red color
         ctx.beginPath();
         ctx.arc(x, y, 5, 0, Math.PI * 2, true);

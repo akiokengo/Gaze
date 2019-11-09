@@ -8,19 +8,18 @@
     <link rel="stylesheet" href="Content/gaze.css" type="text/css" />
 
     <!--バンドル化したJS-->
-    <script src="Scripts/gaze.js"></script>
-    <script src="app.js"></script>
+    <script src="Scripts/Webgazerview.js"></script>
 </head>
 <body style="overflow:hidden">
     <div class="container-fluid">
         <!--row のスタイルで行を指定-->
         <!-- webgazerのメイン画面  -->
-        <div class="row ">
+        <div class="row">
             <!-- col-xx-NN の指定で列を分割する。col-sm-2 で 12分割中、2分割 -->
             <div class="col-sm-2 m-top100">
-                <input type="button" class="row btn std-btn" id="ForwardButton" onclick="window.history.forward();" value="次のページに進む" />
-                <input type="button" class="row btn std-btn" id="ForwardButton" onclick="window.history.back();" value="前のページに戻る" />
-                <input type="button" class="row btn std-btn" id="ResumeButton" value="機能" />
+                <input type="button" class="row btn std-btn" id="ForwardButton" value="次のページに進む" />
+                <input type="button" class="row btn std-btn" id="BackButton" value="前のページに戻る" />
+                <input type="button" class="row btn std-btn" id="ResumeButton" value="機能停止" />
             </div>
             <!-- col-xx-NN の指定で列を分割する。col-sm-2 で 12分割中、2分割 -->
             <div class="col-sm-10 iframe-container">
@@ -31,5 +30,11 @@
 
         </div>
     </div>
+    <script src="Scripts/gaze.js"></script>
+    <script>
+
+        let view = new Gaze.Webgazerview();
+        view.Bind();
+    </script>
 </body>
 </html>

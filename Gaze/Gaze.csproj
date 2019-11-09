@@ -80,6 +80,7 @@
     <Content Include="Scripts\gaze.min.js">
       <DependentUpon>gaze.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\Webgazerview.js" />
     <Content Include="Scripts\webgazer\calibration.js" />
     <Content Include="Scripts\webgazer\jquery.min.js" />
     <Content Include="Scripts\webgazer\main.js" />
@@ -120,10 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="Scripts\indexDB.ts" />
     <TypeScriptCompile Include="webgazer.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\bootstrap\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\lz-string\lz-string.d.ts" />
+    <TypeScriptCompile Include="Scripts\Webgazerview.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
