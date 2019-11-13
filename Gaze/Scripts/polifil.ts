@@ -7,12 +7,12 @@
 
     helper.UpsertAsync(model, "ID");
 
-    //let table = helper.FindRowAsync("ID", 0);
+   let table = helper.FindRowAsync("ID", 0);
 
-    //table.done(x => {
-    //    let model = x;
-    //}).fail(x => {
+//    table.done(x => {
+//        let model = x;
+//    }).fail(x => {
 
-    //});
+//    });
 
 }

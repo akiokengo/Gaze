@@ -119,6 +119,7 @@ $(document).ready(function () {
                             if (isConfirm) {
                                 //clear the calibration & hide the last middle button
                                 ClearCanvas();
+                                window.hogeLib.setGlobaldate();
                                 location.href = 'webgazer.html';
                             } else {
                                 //use restart function to restart the calibration

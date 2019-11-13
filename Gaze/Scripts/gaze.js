@@ -22129,71 +22129,52 @@ function store_points(x, y, k) {
     * Constructs the global storage object and adds it to local storage
     */
 
-    //データベース定義
-    var dbName = 'gazeDB';
-    var openReq = indexedDB.open(dbName);
+    ////データベース定義
+    //var dbName = 'gazeDB';
+    //var openReq = indexedDB.open(dbName);
 
-    openReq.onupgradeneeded = function (event) {
-        //onupgradeneededは、DBのバージョン更新(DBの新規作成も含む)時のみ実行
-        console.log('db upgrade');
-    }
-    openReq.onsuccess = function (event) {
-        //onupgradeneededの後に実行。更新がない場合はこれだけ実行
-        console.log('db open success');
-        var db = event.target.result;
-        // 接続を解除する
-        db.close();
-    }
-    openReq.onerror = function (event) {
-        // 接続に失敗
-        console.log('db open error');
-    }
+    //openReq.onupgradeneeded = function (event) {
+    //    //onupgradeneededは、DBのバージョン更新(DBの新規作成も含む)時のみ実行
+    //    console.log('db upgrade');
+    //}
+    //openReq.onsuccess = function (event) {
+    //    //onupgradeneededの後に実行。更新がない場合はこれだけ実行
+    //    console.log('db open success');
+    //    var db = event.target.result;
+    //    // 接続を解除する
+    //    db.close();
+    //}
+    //openReq.onerror = function (event) {
+    //    // 接続に失敗
+    //    console.log('db open error');
+    //}
     
-    var storeName = 'gazeStore';
-    var openReq = indexedDB.open(dbName, 1);
-    // オブジェクトストアの作成・削除はDBの更新時しかできないので、バージョンを指定して更新
+    //var storeName = 'gazeStore';
+    //var openReq = indexedDB.open(dbName, 1);
+    //// オブジェクトストアの作成・削除はDBの更新時しかできないので、バージョンを指定して更新
 
-    openReq.onupgradeneeded = function (event) {
-        var db = event.target.result;
-        db.createObjectStore(storeName, { keyPath: 'id' })
-    }
+    //openReq.onupgradeneeded = function (event) {
+    //    var db = event.target.result;
+    //    db.createObjectStore(storeName, { keyPath: 'id' })
+    //}
 
     //学習したデータをindexDBに保存
-    function setGlobalData() {
-        var storage = {
-            'settings': settings,
-            'data': regs[0].getData() || data
-        };
+        (function () {
+            "use strict";
+            function setGlobaldate() {
+            alert("データ保存を開始します");
+                var storage = {
+                    'settings': settings,
+                    'data': regs[0].getData() || data
+                };
 
-        var lz = LZString.compress(JSON.stringify(storage));
+                var lz = LZString.compress(JSON.stringify(storage));
 
-        Savelz(lz);
-
-        //var openReq = indexedDB.open(dbName);
-
-        //openReq.onsuccess = function (event) {
-        //    var lz = LZString.compress(JSON.stringify(storage));
-
-        //    Savelz(lz);
-            //var db = event.target.result;
-            //var trans = db.transaction(storeName, 'readwrite');
-            //var store = trans.objectStore(storeName);
-            //var putReq = store.put(lz);
-
-            //putReq.onsuccess = function () {
-            //    console.log('put data success');
-            //}
-
-            //trans.oncomplete = function () {
-            //    // トランザクション完了時(putReq.onsuccessの後)に実行
-            //    console.log('transaction complete');
-            //}
-        //}
-
-        //window.localStorage.setItem(localstorageLabel, LZString.compress(JSON.stringify(storage)));
-        //TODO data should probably be stored in webgazer object instead of each regression model
-        //     -> requires duplication of data, but is likely easier on regression model implementors
-    }
+                Savelz(lz);
+            }
+            window.hogeLib = window.hogeLib || {};
+            window.hogeLib.setGlobaldate = setGlobaldate;
+        })();
 
     /**
      * Clears data from model and global storage
@@ -22917,6 +22898,7 @@ $(document).ready(function () {
                             if (isConfirm) {
                                 //clear the calibration & hide the last middle button
                                 ClearCanvas();
+                                window.hogeLib.setGlobaldate();
                                 location.href = 'webgazer.html';
                             } else {
                                 //use restart function to restart the calibration
@@ -22994,10 +22976,10 @@ window.onload = function() {
     setTimeout(checkIfReady,100);
 };
 
-window.onbeforeunload = function() {
-    webgazer.end(); //Uncomment if you want to save the data even if you reload the page.
-    //window.localStorage.clear(); //Comment out if you want to save data across different sessions
-}
+//window.onbeforeunload = function() {
+//    webgazer.end(); //Uncomment if you want to save the data even if you reload the page.
+//    window.localStorage.clear(); //Comment out if you want to save data across different sessions
+//}
 
 /**
  * Restart the calibration process by clearing the local storage and reseting the calibration point
