@@ -15,6 +15,13 @@
                 };
             }
 
+            let closeBtn = document.getElementById("closeBtn");
+            if (closeBtn) {
+                closeBtn.onclick = e => {
+
+                };
+            }
+
         }
     }
 

@@ -51,7 +51,15 @@ $(document).ready(function () {
     if (!result) {
         return;
     }
-    helpModalShow();
+
+    var loadAsync = LoadAsync();
+    loadAsync.done(function () {
+        location.href = 'webgazer.html';
+    }).fail(function () {
+        helpModalShow();
+    });
+
+
     $(".Calibration").click(function () { // click event on the calibration buttons
 
         var id = $(this).attr('id');
@@ -86,7 +94,7 @@ $(document).ready(function () {
             if (canvas) {
                 canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
             }
-            
+
 
             // notification for the measurement process
             swal({
@@ -122,7 +130,7 @@ $(document).ready(function () {
 
                                 webgazer.saveAsync().always(() => {
                                     location.href = 'webgazer.html';
-                                });                                
+                                });
                             } else {
                                 //use restart function to restart the calibration
                                 ClearCalibration();

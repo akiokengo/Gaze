@@ -12,6 +12,11 @@ var Gaze;
                     this.ViewModel.InvokeRestart();
                 };
             }
+            let closeBtn = document.getElementById("closeBtn");
+            if (closeBtn) {
+                closeBtn.onclick = e => {
+                };
+            }
         }
     }
     Gaze.IndexView = IndexView;
