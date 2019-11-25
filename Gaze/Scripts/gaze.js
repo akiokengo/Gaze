@@ -21987,6 +21987,11 @@ function store_points(x, y, k) {
     var smoothingVals = new webgazer.util.DataWindow(4);
     var k = 0;
 
+
+    var AverageFlag = false;
+    var X_Coordinate = 0;
+    var Y_Coordinate = 0;
+    var Flagint = 0;
     function loop() {
 
         if (!paused) {
@@ -22041,7 +22046,28 @@ function store_points(x, y, k) {
                     }
                 }
                 // GazeDot
-                gazeDot.style.transform = 'translate3d(' + pred.x + 'px,' + pred.y + 'px,0)';
+                //gazeDot.style.transform = 'translate3d(' + pred.x + 'px,' + pred.y + 'px,0)';
+                //表示直前の値の平均値を算出し、予測ポイントを安定させる（要修正箇所
+
+                if (AverageFlag) {//trueであれば平均値を算出 
+                    var aveX = X_Coordinate / (Flagint);
+                    var aveY = Y_Coordinate / (Flagint);
+                    gazeDot.style.transform = 'translate3d(' + aveX + 'px,' + aveY + 'px,0)';
+                    X_Coordinate = 0;
+                    Y_Coordinate = 0;
+                    AverageFlag = false;
+                    Flagint = 0;
+                }
+                else {
+                    if (Flagint<=3) {//何個の予測座標ごとに平均値を出すか指定。条件式の右の数字＋１個ごととなる。
+                        X_Coordinate += pred.x;
+                        Y_Coordinate += pred.y;
+                        Flagint++;
+                    }
+                    else {
+                        AverageFlag=true;
+                    }
+                }
             }
 
             requestAnimationFrame(loop);
@@ -22863,7 +22889,16 @@ $(document).ready(function () {
 
     var loadAsync = LoadAsync();
     loadAsync.done(function () {
-        location.href = 'webgazer.html';
+
+        var result = confirm("既に学習したデータがあります。学習動作をスキップしますか？");
+
+        if (result) {
+            location.href = 'webgazer.html';
+        }
+        ClearCalibration();
+        ClearCanvas();
+        ShowCalibrationPoint();
+        
     }).fail(function () {
         helpModalShow();
     });
@@ -22935,8 +22970,6 @@ $(document).ready(function () {
                         }).then(isConfirm => {
                             if (isConfirm) {
                                 //clear the calibration & hide the last middle button
-                                ClearCanvas();
-
                                 webgazer.saveAsync().always(() => {
                                     location.href = 'webgazer.html';
                                 });
@@ -23001,50 +23034,50 @@ window.onload = function() {
     }
 
     //start the webgazer tracker
-    webgazer.setRegression('ridge') /* currently must set regression and tracker */
-        .setTracker('clmtrackr')
-        .setGazeListener(function (data, clock) {
-            //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-            //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
-        })
-        .beginAsync()
-        .always(function (w) {
-            w.showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
-            setTimeout(checkIfReady, 100);
-        });
-
-    ////start the webgazer tracker
     //webgazer.setRegression('ridge') /* currently must set regression and tracker */
     //    .setTracker('clmtrackr')
-    //    .setGazeListener(function(data, clock) {
-    //      //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-    //      //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+    //    .setGazeListener(function (data, clock) {
+    //           console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
+    //           console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
     //    })
-    //    .begin()
-    //    .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
-
-
-    ////Set up the webgazer video feedback.
-    //var setup = function() {
-
-    //    //Set up the main canvas. The main canvas is used to calibrate the webgazer.
-    //    var canvas = document.getElementById("plotting_canvas");
-    //    if (canvas) {
-    //        canvas.width = window.innerWidth;
-    //        canvas.height = window.innerHeight;
-    //        canvas.style.position = 'fixed';
-    //    }
-        
-    //};
-
-    //function checkIfReady() {
-    //    if (webgazer.isReady()) {
-    //        setup();
-    //    } else {
+    //    .beginAsync()
+    //    .always(function (w) {
+    //        w.showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
     //        setTimeout(checkIfReady, 100);
-    //    }
-    //}
-    //setTimeout(checkIfReady,100);
+    //    });
+
+    //start the webgazer tracker
+    webgazer.setRegression('ridge') /* currently must set regression and tracker */
+        .setTracker('clmtrackr')
+        .setGazeListener(function(data, clock) {
+          //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
+          //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+        })
+        .begin()
+        .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
+
+
+    //Set up the webgazer video feedback.
+    var setup = function() {
+
+        //Set up the main canvas. The main canvas is used to calibrate the webgazer.
+        var canvas = document.getElementById("plotting_canvas");
+        if (canvas) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.position = 'fixed';
+        }
+        
+    };
+
+    function checkIfReady() {
+        if (webgazer.isReady()) {
+            setup();
+        } else {
+            setTimeout(checkIfReady, 100);
+        }
+    }
+    setTimeout(checkIfReady,100);
 };
 
 //window.onbeforeunload = function() {

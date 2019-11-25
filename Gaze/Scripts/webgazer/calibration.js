@@ -54,7 +54,16 @@ $(document).ready(function () {
 
     var loadAsync = LoadAsync();
     loadAsync.done(function () {
-        location.href = 'webgazer.html';
+
+        var result = confirm("既に学習したデータがあります。学習動作をスキップしますか？");
+
+        if (result) {
+            location.href = 'webgazer.html';
+        }
+        ClearCalibration();
+        ClearCanvas();
+        ShowCalibrationPoint();
+        
     }).fail(function () {
         helpModalShow();
     });
@@ -126,8 +135,6 @@ $(document).ready(function () {
                         }).then(isConfirm => {
                             if (isConfirm) {
                                 //clear the calibration & hide the last middle button
-                                ClearCanvas();
-
                                 webgazer.saveAsync().always(() => {
                                     location.href = 'webgazer.html';
                                 });

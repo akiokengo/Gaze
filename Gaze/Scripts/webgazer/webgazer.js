@@ -10722,6 +10722,11 @@ function store_points(x, y, k) {
     var smoothingVals = new webgazer.util.DataWindow(4);
     var k = 0;
 
+
+    var AverageFlag = false;
+    var X_Coordinate = 0;
+    var Y_Coordinate = 0;
+    var Flagint = 0;
     function loop() {
 
         if (!paused) {
@@ -10776,7 +10781,28 @@ function store_points(x, y, k) {
                     }
                 }
                 // GazeDot
-                gazeDot.style.transform = 'translate3d(' + pred.x + 'px,' + pred.y + 'px,0)';
+                //gazeDot.style.transform = 'translate3d(' + pred.x + 'px,' + pred.y + 'px,0)';
+                //表示直前の値の平均値を算出し、予測ポイントを安定させる（要修正箇所
+
+                if (AverageFlag) {//trueであれば平均値を算出 
+                    var aveX = X_Coordinate / (Flagint);
+                    var aveY = Y_Coordinate / (Flagint);
+                    gazeDot.style.transform = 'translate3d(' + aveX + 'px,' + aveY + 'px,0)';
+                    X_Coordinate = 0;
+                    Y_Coordinate = 0;
+                    AverageFlag = false;
+                    Flagint = 0;
+                }
+                else {
+                    if (Flagint<=3) {//何個の予測座標ごとに平均値を出すか指定。条件式の右の数字＋１個ごととなる。
+                        X_Coordinate += pred.x;
+                        Y_Coordinate += pred.y;
+                        Flagint++;
+                    }
+                    else {
+                        AverageFlag=true;
+                    }
+                }
             }
 
             requestAnimationFrame(loop);
