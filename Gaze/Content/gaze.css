@@ -7420,16 +7420,34 @@ button.close {
 }
 /*# sourceMappingURL=bootstrap.css.map */
 .std-btn {
-    min-width: 200px;
-    margin: 20px;
-    min-height: 100px;
+    color: #000; /* 文字色を黒にする */
+    background-color: #ffffff; /* 背景色を白にする */
+    border: 2px solid #000; /* 要素の枠を2pxの太さで、線の種類をsolidに、色を黒にする */
+    text-decoration: none; /* リンクに出てくる下線を無効にする*/
+}
+
+    .std-btn:hover {
+        background-color: cornflowerblue;
+        transform: rotate(360deg); /* 回転 */
+        transition: 1s; /* 1秒かけて動く */
+    }
+
+   
+
+
+
+.std-btn {
+    min-width: 200px; /*要素が200pxより小さくならない*/
+    margin: 20px; /*上のボタンからの余白が20px*/
+    min-height: 100px; /*高さが100pxより小さくならない*/
 }
 
 .m-top100 {
-    margin-top: 300px;
+    margin-top: 300px; /*ボタンの位置*/
 }
 
 /*iframeのスタイルをCSSに定義する*/
+/*Google画面が来る部分*/
 .iframe-container {
     overflow: hidden;
     padding-top: 56.25%;
@@ -7437,7 +7455,7 @@ button.close {
 }
 
     .iframe-container iframe {
-        position: absolute;
+        position: absolute; /*要素の配置方法を指定*/
         top: 0;
         left: 0;
         width: 100%;
