@@ -1,7 +1,7 @@
 ﻿namespace Gaze {
     export class lzString {
         public ID: number;
-        public Compress: String;
+        public Compress: string;
 
         toString() {
             return "lzString";

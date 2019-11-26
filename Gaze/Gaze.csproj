@@ -180,6 +180,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties bundleconfig_1json__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
