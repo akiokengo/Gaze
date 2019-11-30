@@ -22145,25 +22145,7 @@ function store_points(x, y, k) {
     /**
      * Loads the global data and passes it to the regression model
      */
-    function loadGlobalData() {
-
-        var storage = defaults;
-        try {
-            var data = LZString.decompress(window.localStorage.getItem(localstorageLabel));
-            var parsedObj = JSON.parse(data);
-            if (parsedObj) {
-                storage = parsedObj;
-            }
-        } catch (err) {
-            console.warn('Cannot load the global data. WebGazer will use the default data.');
-        }
-
-        settings = storage.settings;
-        data = storage.data;
-        for (var reg in regs) {
-            regs[reg].setData(storage.data);
-        }
-    }
+    
 
     function loadGlobalDataAsync() {
         let resultAsync = LoadAsync();
@@ -22337,7 +22319,7 @@ function store_points(x, y, k) {
             alert("WebGazer works only over https. If you are doing local development you need to run a local server.");
         }
 
-        loadGlobalData();
+        
 
         onFail = onFail || function () { console.log('No stream') };
 
