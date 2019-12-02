@@ -22145,7 +22145,25 @@ function store_points(x, y, k) {
     /**
      * Loads the global data and passes it to the regression model
      */
-    
+    function loadGlobalData() {
+
+        var storage = defaults;
+        try {
+            var data = LZString.decompress(window.localStorage.getItem(localstorageLabel));
+            var parsedObj = JSON.parse(data);
+            if (parsedObj) {
+                storage = parsedObj;
+            }
+        } catch (err) {
+            console.warn('Cannot load the global data. WebGazer will use the default data.');
+        }
+
+        settings = storage.settings;
+        data = storage.data;
+        for (var reg in regs) {
+            regs[reg].setData(storage.data);
+        }
+    }
 
     function loadGlobalDataAsync() {
         let resultAsync = LoadAsync();
@@ -22314,41 +22332,7 @@ function store_points(x, y, k) {
      * @param {Function} onFail - Callback to call in case it is impossible to find user camera
      * @returns {*}
      */
-    webgazer.begin = function (onFail) {
-        if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.chrome) {
-            alert("WebGazer works only over https. If you are doing local development you need to run a local server.");
-        }
-
-        
-
-        onFail = onFail || function () { console.log('No stream') };
-
-        if (debugVideoLoc) {
-            init(debugVideoLoc);
-            return webgazer;
-        }
-
-        ///////////////////////
-        // SETUP VIDEO ELEMENTS
-        // Sets .mediaDevices.getUserMedia depending on browser
-        setUserMediaVariable();
-
-        // Request webcam access under specific constraints
-        // WAIT for access
-        navigator.mediaDevices.getUserMedia(webgazer.params.camConstraints)
-            .then(function (stream) { // set the stream
-                videoStream = stream;
-                init(videoStream);
-            })
-            .catch(function (err) { // error handling
-                onFail();
-                console.log(err);
-                videoElement = null;
-                videoStream = null;
-            });
-
-        return webgazer;
-    };
+  
     webgazer.beginAsync = function (onFail) {
         if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.chrome) {
             alert("WebGazer works only over https. If you are doing local development you need to run a local server.");
@@ -22872,7 +22856,7 @@ $(document).ready(function () {
     var loadAsync = LoadAsync();
     loadAsync.done(function () {
 
-        var result = confirm("既に学習したデータがあります。学習動作をスキップしますか？");
+        var result = confirm("���Ɋw�K�����f�[�^������܂��B�w�K�����X�L�b�v���܂����H");
 
         if (result) {
             location.href = 'webgazer.html';
@@ -23016,27 +23000,19 @@ window.onload = function() {
     }
 
     //start the webgazer tracker
-    //webgazer.setRegression('ridge') /* currently must set regression and tracker */
-    //    .setTracker('clmtrackr')
-    //    .setGazeListener(function (data, clock) {
-    //           console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-    //           console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
-    //    })
-    //    .beginAsync()
-    //    .always(function (w) {
-    //        w.showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
-    //        setTimeout(checkIfReady, 100);
-    //    });
-
-    //start the webgazer tracker
     webgazer.setRegression('ridge') /* currently must set regression and tracker */
-        .setTracker('clmtrackr')
-        .setGazeListener(function(data, clock) {
-          //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-          //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+       .setTracker('clmtrackr')
+       .setGazeListener(function (data, clock) {
+               console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
+               console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
         })
-        .begin()
-        .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
+        .beginAsync()
+        .always(function (w) {
+            w.showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
+          setTimeout(checkIfReady, 100);
+       });
+
+    
 
 
     //Set up the webgazer video feedback.
