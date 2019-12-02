@@ -1,4 +1,4 @@
-var PointCalibrate = 0;
+ï»¿var PointCalibrate = 0;
 var CalibrationPoints = {};
 
 /**
@@ -55,7 +55,7 @@ $(document).ready(function () {
     var loadAsync = LoadAsync();
     loadAsync.done(function () {
 
-        var result = confirm("Šù‚ÉŠwK‚µ‚½ƒf[ƒ^‚ª‚ ‚è‚Ü‚·BŠwK“®ì‚ğƒXƒLƒbƒv‚µ‚Ü‚·‚©H");
+        var result = confirm("æ—¢ã«å­¦ç¿’ã—ãŸãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã™ã€‚å­¦ç¿’å‹•ä½œã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ã¾ã™ã‹ï¼Ÿ");
 
         if (result) {
             location.href = 'webgazer.html';
