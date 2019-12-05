@@ -93,6 +93,7 @@
     <Content Include="Scripts\gaze.min.js">
       <DependentUpon>gaze.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\Median.js" />
     <Content Include="Scripts\model\model.js" />
     <Content Include="Scripts\polifil.js" />
     <Content Include="Scripts\Webgazerview.js" />
@@ -142,6 +143,7 @@
     <TypeScriptCompile Include="Scripts\Extensions\StringExtensions.ts" />
     <TypeScriptCompile Include="Scripts\Extensions\TypedConstructor.ts" />
     <TypeScriptCompile Include="Scripts\indexDB.ts" />
+    <TypeScriptCompile Include="Scripts\Median.ts" />
     <TypeScriptCompile Include="Scripts\model\model.ts" />
     <TypeScriptCompile Include="Scripts\polifil.ts" />
     <TypeScriptCompile Include="webgazer.d.ts" />

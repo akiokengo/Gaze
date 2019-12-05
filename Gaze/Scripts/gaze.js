@@ -11263,6 +11263,41 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
+var Gaze;
+(function (Gaze) {
+    /**
+     * 座標から中央値を返すコードをTypeScriptでコードする
+     * */
+    class Median {
+        constructor(threshold) {
+            this.Queue = new Array();
+            this.Threshold = threshold;
+        }
+        Generate(x, y) {
+            this.Queue.push({ X: x, Y: y });
+            if (this.Threshold < this.Queue.length) {
+                this.Queue = this.Queue.slice(1);
+            }
+            let half = (this.Queue.length / 2) | 0;
+            let xSort = this.Queue.map(p => p.X).sort();
+            let ySort = this.Queue.map(p => p.Y).sort();
+            let xMedian = this.Parse(xSort, half);
+            let yMedian = this.Parse(ySort, half);
+            return {
+                X: xMedian,
+                Y: yMedian
+            };
+        }
+        Parse(arr, half) {
+            if (arr.length % 2) {
+                return arr[half];
+            }
+            return (arr[half - 1] + arr[half]) / 2;
+        }
+    }
+    Gaze.Median = Median;
+})(Gaze || (Gaze = {}));
+//# sourceMappingURL=Median.js.map
 /** WebGazer.js: Scalable Webcam EyeTracking Using User Interactions 
  * 
  * Copyright (c) 2016-2019, Brown HCI Group 
@@ -21992,6 +22027,8 @@ function store_points(x, y, k) {
     var X_Coordinate = 0;
     var Y_Coordinate = 0;
     var Flagint = 0;
+
+    var pMedian = new Gaze.Median(5);
     function loop() {
 
         if (!paused) {
@@ -22045,34 +22082,42 @@ function store_points(x, y, k) {
                         k = 0;
                     }
                 }
+
+
                 // GazeDot
-                //gazeDot.style.transform = 'translate3d(' + pred.x + 'px,' + pred.y + 'px,0)';
+                // gazeDot.style.transform = 'translate3d(' + pred.x + 'px,' + pred.y + 'px,0)';
+
+                var m = pMedian.Generate(pred.x, pred.y);
+                gazeDot.style.transform = 'translate3d(' + m.X + 'px,' + m.Y + 'px,0)';
+
                 //表示直前の値の平均値を算出し、予測ポイントを安定させる（要修正箇所
 
-                if (AverageFlag) {//trueであれば平均値を算出 
-                    var aveX = X_Coordinate / (Flagint);
-                    var aveY = Y_Coordinate / (Flagint);
-                    gazeDot.style.transform = 'translate3d(' + aveX + 'px,' + aveY + 'px,0)';
-                    X_Coordinate = 0;
-                    Y_Coordinate = 0;
-                    AverageFlag = false;
-                    Flagint = 0;
-                }
-                else {
-                    if (Flagint<=3) {//何個の予測座標ごとに平均値を出すか指定。条件式の右の数字＋１個ごととなる。
-                        X_Coordinate += pred.x;
-                        Y_Coordinate += pred.y;
-                        Flagint++;
-                    }
-                    else {
-                        AverageFlag=true;
-                    }
-                }
+                //if (AverageFlag) {//trueであれば平均値を算出 
+                //    var aveX = X_Coordinate / (Flagint);
+                //    var aveY = Y_Coordinate / (Flagint);
+                //    gazeDot.style.transform = 'translate3d(' + aveX + 'px,' + aveY + 'px,0)';
+                //    X_Coordinate = 0;
+                //    Y_Coordinate = 0;
+                //    AverageFlag = false;
+                //    Flagint = 0;
+                //}
+                //else {
+                //    if (Flagint <= 3) {//何個の予測座標ごとに平均値を出すか指定。条件式の右の数字＋１個ごととなる。
+                //        X_Coordinate += pred.x;
+                //        Y_Coordinate += pred.y;
+                //        Flagint++;
+                //    }
+                //    else {
+                //        AverageFlag = true;
+                //    }
+                //}
             }
 
             requestAnimationFrame(loop);
         }
     }
+
+
 
     /**
      * Records screen position data based on current pupil feature and passes it
@@ -22365,9 +22410,9 @@ function store_points(x, y, k) {
     //            videoStream = null;
     //        });
 
-    //    return webgazer;
+    //   return webgazer;
     //};
-  
+
     webgazer.beginAsync = function (onFail) {
         if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.chrome) {
             alert("WebGazer works only over https. If you are doing local development you need to run a local server.");
@@ -23034,7 +23079,7 @@ window.onload = function() {
         }
     }
 
-    //start the webgazer tracker　
+    //start the webgazer tracker
     webgazer.setRegression('ridge') /* currently must set regression and tracker */
         .setTracker('clmtrackr')
         .setGazeListener(function (data, clock) {
@@ -23045,7 +23090,7 @@ window.onload = function() {
         .always(function (w) {
             w.showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
             setTimeout(checkIfReady, 100);
-       });
+        });
 
     ////start the webgazer tracker
     //webgazer.setRegression('ridge') /* currently must set regression and tracker */

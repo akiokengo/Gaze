@@ -7,6 +7,8 @@
       /* Polyfill */
 
       /* webgazer */
+      "Scripts/Median.js",
+
       "Scripts/webgazer/webgazer.js",
       "Scripts/webgazer/calibration.js",
       "Scripts/webgazer/main.js",
