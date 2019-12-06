@@ -59,6 +59,7 @@ $(document).ready(function () {
 
         if (result) {
             location.href = 'webgazer.html';
+            // location.href = "/Redirect/";
         }
         ClearCalibration();
         ClearCanvas();

@@ -10723,12 +10723,13 @@ function store_points(x, y, k) {
     var k = 0;
 
 
-    var AverageFlag = false;
-    var X_Coordinate = 0;
-    var Y_Coordinate = 0;
-    var Flagint = 0;
+    //var AverageFlag = false;
+    //var X_Coordinate = 0;
+    //var Y_Coordinate = 0;
+    //var Flagint = 0;
 
-    var pMedian = new Gaze.Median(5);
+    var pMedian = new Gaze.Median(5 /* 中央値をとるためのサンプル数 */);
+    var dotParser = new Gaze.DotElementParser(3 * 1000 /* msec */, 30 /* 回で検知 */);
     function loop() {
 
         if (!paused) {
@@ -10787,8 +10788,11 @@ function store_points(x, y, k) {
                 // GazeDot
                 // gazeDot.style.transform = 'translate3d(' + pred.x + 'px,' + pred.y + 'px,0)';
 
+                // 中央値をとる
                 var m = pMedian.Generate(pred.x, pred.y);
                 gazeDot.style.transform = 'translate3d(' + m.X + 'px,' + m.Y + 'px,0)';
+                // 座標から要素を割り出して、指定時間経過後に処理を行う
+                dotParser.Add(m);
 
                 //表示直前の値の平均値を算出し、予測ポイントを安定させる（要修正箇所
 

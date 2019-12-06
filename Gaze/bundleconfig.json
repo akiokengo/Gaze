@@ -6,8 +6,17 @@
       "Scripts/jquery-3.4.1.js",
       /* Polyfill */
 
+      /* indexd db & extensions */
+      "Scripts/Extensions/TypedConstructor.js",
+      "Scripts/Extensions/StringExtensions.js",
+      "Scripts/Extensions/ObjectExtensions.js",
+      "Scripts/Extensions/EnumerableExtensions.js",
+      "IndexedDBHelper.js",
+
       /* webgazer */
       "Scripts/Median.js",
+      "Scripts/DotElementParser.js",
+
 
       "Scripts/webgazer/webgazer.js",
       "Scripts/webgazer/calibration.js",
@@ -16,14 +25,12 @@
       "Scripts/webgazer/precision_store_points.js",
       "Scripts/webgazer/resize_canvas.js",
       "Scripts/webgazer/sweetalert.min.js",
-      "Scripts/bootstrap.min.js",
+      "Scripts/bootstrap.min.js"
 
-      /* indexd db & extensions */
-      "Scripts/Extensions/TypedConstructor.js",
-      "Scripts/Extensions/StringExtensions.js",
-      "Scripts/Extensions/ObjectExtensions.js",
-      "Scripts/Extensions/EnumerableExtensions.js",
-      "IndexedDBHelper.js"
+
+
+
+
 
     ],
     "minify": {
