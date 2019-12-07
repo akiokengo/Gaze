@@ -11605,7 +11605,6 @@ var Gaze;
     }
     Gaze.Median = Median;
 })(Gaze || (Gaze = {}));
-//# sourceMappingURL=Median.js.map
 var Gaze;
 (function (Gaze) {
     class DotElementParser {
@@ -11680,7 +11679,6 @@ var Gaze;
     }
     Gaze.DotElementParser = DotElementParser;
 })(Gaze || (Gaze = {}));
-//# sourceMappingURL=DotElementParser.js.map
 /** WebGazer.js: Scalable Webcam EyeTracking Using User Interactions 
  * 
  * Copyright (c) 2016-2019, Brown HCI Group 
@@ -22599,11 +22597,13 @@ function store_points(x, y, k) {
 
     function loadGlobalDataAsync() {
         let resultAsync = LoadAsync();
-        return resultAsync.done(x => {
-            settings = x.settings;
-            data = x.data;
-            for (var reg in regs) {
-                regs[reg].setData(x.data);
+        return resultAsync.then(x => {
+            if (x) {
+                settings = x.settings;
+                data = x.data;
+                for (var reg in regs) {
+                    regs[reg].setData(x.data);
+                }
             }
         });
     }
@@ -22804,37 +22804,44 @@ function store_points(x, y, k) {
         if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.chrome) {
             alert("WebGazer works only over https. If you are doing local development you need to run a local server.");
         }
+        let dfd = $.Deferred();
+        loadGlobalDataAsync()
+            .fail(() => {
+                dfd.reject(webgazer);
+            })
+            .then(function () {
+                onFail = onFail || function () { console.log('No stream') };
 
-        return loadGlobalDataAsync().then(function () {
+                if (debugVideoLoc) {
+                    init(debugVideoLoc);
+                    dfd.resolve(webgazer);
+                    return dfd.promise();
+                }
 
-            onFail = onFail || function () { console.log('No stream') };
+                ///////////////////////
+                // SETUP VIDEO ELEMENTS
+                // Sets .mediaDevices.getUserMedia depending on browser
+                setUserMediaVariable();
 
-            if (debugVideoLoc) {
-                init(debugVideoLoc);
-                return webgazer;
-            }
+                // Request webcam access under specific constraints
+                // WAIT for access            
+                navigator.mediaDevices.getUserMedia(webgazer.params.camConstraints)
+                    .then(function (stream) { // set the stream
+                        videoStream = stream;
+                        init(videoStream);
+                        dfd.resolve(webgazer);
+                    })
+                    .catch(function (err) { // error handling
+                        onFail();
+                        console.log(err);
+                        videoElement = null;
+                        videoStream = null;
+                        dfd.resolve(webgazer);
+                    });
+                return dfd.promise();
+            });
 
-            ///////////////////////
-            // SETUP VIDEO ELEMENTS
-            // Sets .mediaDevices.getUserMedia depending on browser
-            setUserMediaVariable();
-
-            // Request webcam access under specific constraints
-            // WAIT for access
-            navigator.mediaDevices.getUserMedia(webgazer.params.camConstraints)
-                .then(function (stream) { // set the stream
-                    videoStream = stream;
-                    init(videoStream);
-                })
-                .catch(function (err) { // error handling
-                    onFail();
-                    console.log(err);
-                    videoElement = null;
-                    videoStream = null;
-                });
-
-            return webgazer;
-        });
+        return dfd.promise();
     };
 
     /**

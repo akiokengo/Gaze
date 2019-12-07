@@ -11,10 +11,19 @@
 
 
 function LoadAsync() {
+    let dfd = $.Deferred();
     let helper = new Gaze.IndexedDBHelper<Gaze.lzString>(Gaze.lzString, "db");
     // データが読み込めた場合は、圧縮状態から復元し、JSON文字列をオブジェクト化して返す
-    return helper.FindRowAsync("ID", 0).then(x => {
-        let json = LZString.decompress(x.Compress);
-        return JSON.parse(json);
-    });
+    helper.FindRowAsync("ID", 0)
+        .fail(() => {
+            dfd.reject({});
+        })
+        .then(x => {
+            if (x) {
+                let json = LZString.decompress(x.Compress);
+                dfd.resolve(JSON.parse(json));
+            }
+            dfd.reject({});
+        });
+    return dfd.promise();
 }
