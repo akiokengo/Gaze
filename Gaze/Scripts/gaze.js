@@ -11605,6 +11605,7 @@ var Gaze;
     }
     Gaze.Median = Median;
 })(Gaze || (Gaze = {}));
+//# sourceMappingURL=Median.js.map
 var Gaze;
 (function (Gaze) {
     class DotElementParser {
@@ -11679,6 +11680,7 @@ var Gaze;
     }
     Gaze.DotElementParser = DotElementParser;
 })(Gaze || (Gaze = {}));
+//# sourceMappingURL=DotElementParser.js.map
 /** WebGazer.js: Scalable Webcam EyeTracking Using User Interactions 
  * 
  * Copyright (c) 2016-2019, Brown HCI Group 
@@ -22764,41 +22766,41 @@ function store_points(x, y, k) {
      * @param {Function} onFail - Callback to call in case it is impossible to find user camera
      * @returns {*}
      */
-    //webgazer.begin = function (onFail) {
-    //    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.chrome) {
-    //        alert("WebGazer works only over https. If you are doing local development you need to run a local server.");
-    //    }
+    webgazer.begin = function (onFail) {
+        if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.chrome) {
+            alert("WebGazer works only over https. If you are doing local development you need to run a local server.");
+        }
 
-    //    loadGlobalData();
+        loadGlobalData();
 
-    //    onFail = onFail || function () { console.log('No stream') };
+        onFail = onFail || function () { console.log('No stream') };
 
-    //    if (debugVideoLoc) {
-    //        init(debugVideoLoc);
-    //        return webgazer;
-    //    }
+        if (debugVideoLoc) {
+            init(debugVideoLoc);
+            return webgazer;
+        }
 
-    //    ///////////////////////
-    //    // SETUP VIDEO ELEMENTS
-    //    // Sets .mediaDevices.getUserMedia depending on browser
-    //    setUserMediaVariable();
+        ///////////////////////
+        // SETUP VIDEO ELEMENTS
+        // Sets .mediaDevices.getUserMedia depending on browser
+        setUserMediaVariable();
 
-    //    // Request webcam access under specific constraints
-    //    // WAIT for access
-    //    navigator.mediaDevices.getUserMedia(webgazer.params.camConstraints)
-    //        .then(function (stream) { // set the stream
-    //            videoStream = stream;
-    //            init(videoStream);
-    //        })
-    //        .catch(function (err) { // error handling
-    //            onFail();
-    //            console.log(err);
-    //            videoElement = null;
-    //            videoStream = null;
-    //        });
+        // Request webcam access under specific constraints
+        // WAIT for access
+        navigator.mediaDevices.getUserMedia(webgazer.params.camConstraints)
+            .then(function (stream) { // set the stream
+                videoStream = stream;
+                init(videoStream);
+            })
+            .catch(function (err) { // error handling
+                onFail();
+                console.log(err);
+                videoElement = null;
+                videoStream = null;
+            });
 
-    //   return webgazer;
-    //};
+        return webgazer;
+    };
 
     webgazer.beginAsync = function (onFail) {
         if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.chrome) {
@@ -22806,10 +22808,7 @@ function store_points(x, y, k) {
         }
         let dfd = $.Deferred();
         loadGlobalDataAsync()
-            .fail(() => {
-                dfd.reject(webgazer);
-            })
-            .then(function () {
+            .always(function () {
                 onFail = onFail || function () { console.log('No stream') };
 
                 if (debugVideoLoc) {
@@ -23339,7 +23338,7 @@ $(document).ready(function () {
         ClearCalibration();
         ClearCanvas();
         ShowCalibrationPoint();
-        
+
     }).fail(function () {
         helpModalShow();
     });
@@ -23454,7 +23453,7 @@ function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-window.onload = function() {
+window.onload = function () {
 
     //Set up the webgazer video feedback.
     var setup = function () {
@@ -23473,13 +23472,12 @@ window.onload = function() {
             setTimeout(checkIfReady, 100);
         }
     }
-
     //start the webgazer tracker
     webgazer.setRegression('ridge') /* currently must set regression and tracker */
         .setTracker('clmtrackr')
         .setGazeListener(function (data, clock) {
-               console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-               console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+            //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
+            //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
         })
         .beginAsync()
         .always(function (w) {
@@ -23487,49 +23485,13 @@ window.onload = function() {
             setTimeout(checkIfReady, 100);
         });
 
-    ////start the webgazer tracker
-    //webgazer.setRegression('ridge') /* currently must set regression and tracker */
-    //    .setTracker('clmtrackr')
-    //    .setGazeListener(function(data, clock) {
-    //      //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-    //      //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
-    //    })
-    //    .begin()
-    //    .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
-
-
-    //Set up the webgazer video feedback.
-    var setup = function() {
-
-        //Set up the main canvas. The main canvas is used to calibrate the webgazer.
-        var canvas = document.getElementById("plotting_canvas");
-        if (canvas) {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            canvas.style.position = 'fixed';
-        }
-        
-    };
-
-    function checkIfReady() {
-        if (webgazer.isReady()) {
-            setup();
-        } else {
-            setTimeout(checkIfReady, 100);
-        }
-    }
-    setTimeout(checkIfReady,100);
+    setTimeout(checkIfReady, 100);
 };
 
-//window.onbeforeunload = function() {
-//    webgazer.end(); //Uncomment if you want to save the data even if you reload the page.
-//    window.localStorage.clear(); //Comment out if you want to save data across different sessions
-//}
-
 /**
- * Restart the calibration process by clearing the local storage and reseting the calibration point
+ * Restart the calibration process by clearing thelocal storage and reseting the calibration point
  */
-function Restart(){
+function Restart() {
     document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
     ClearCalibration();
     PopUpInstruction();

@@ -64,7 +64,7 @@ $(document).ready(function () {
         ClearCalibration();
         ClearCanvas();
         ShowCalibrationPoint();
-        
+
     }).fail(function () {
         helpModalShow();
     });
