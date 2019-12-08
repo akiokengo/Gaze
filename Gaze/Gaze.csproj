@@ -103,7 +103,7 @@
     <Content Include="Scripts\indexDB.js.map" />
     <Content Include="Scripts\DotElementParser.js.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\google_Ctlr.js" />
+    <Content Include="Scripts\google_Ctrl.js" />
     <Content Include="Scripts\indexDB.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -158,7 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="Scripts\google_Ctlr.ts" />
+    <TypeScriptCompile Include="Scripts\google_Ctrl.ts" />
     <TypeScriptCompile Include="Scripts\DotElementParser.ts" />
     <TypeScriptCompile Include="Scripts\Extensions\EnumerableExtensions.ts" />
     <TypeScriptCompile Include="IndexedDBHelper.ts" />
