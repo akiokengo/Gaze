@@ -10,6 +10,7 @@
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
           crossorigin="anonymous">
     <link rel="stylesheet" href="./Content/Google.css">
+    <script src="Scripts/google_Ctrl.js"></script>
 </head>
 <body>
     <div id="_google" class="container-fluid">
@@ -35,6 +36,10 @@
             </div>
         </div>
     </div>
-    <script src="Scripts/google_Ctlr.js"></script>
+
+    <script>
+        let view = new Gaze.google_CtrlView();
+        view.Bind();
+    </script>
 </body>
 </html>
