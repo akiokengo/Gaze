@@ -59,7 +59,10 @@
                 googleFrame.hidden = true;
                 searchFrame.hidden = false;
 
+                x = x.replace('<a href="/url?q=', `<a href="${location.origin}/url?q=`)
+
                 searchFrame.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(x);
+
             };
         }
     }
