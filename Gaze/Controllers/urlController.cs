@@ -11,7 +11,7 @@ namespace TypeScriptHTMLApp1.Controllers
         // GET: url
         public ActionResult Index()
         {
-            var q = this.Request.QueryString['q'];
+            var q = this.Request.QueryString["q"];
             return Redirect(q);
         }
     }
