@@ -13,32 +13,7 @@ namespace TypeScriptHTMLApp1.Controllers
 {
     public class RedirectController : Controller
     {
-        static readonly HttpClient _client = new HttpClient();
 
-        public async Task<ActionResult> Index()
-        {
-            var query = Request.QueryString["q"];
-            var uri = "https://gazefunctions.azurewebsites.net/search?q=" + query;
-
-            var html = await GetAsync(uri);
-            return Content(html);
-        }
-
-        protected async Task<string> GetAsync(string uri)
-        {
-            try
-            {
-                HttpResponseMessage response = await _client.GetAsync(uri);
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsStringAsync();
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(ex.ToString());
-                throw;
-            }
-
-        }
 
     }
 }
