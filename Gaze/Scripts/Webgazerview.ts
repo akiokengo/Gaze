@@ -1,8 +1,5 @@
 ﻿namespace Gaze {
-    export class Webgazerviewmodel {
-        
-        
-    }
+
 
 
     export class Webgazerview {
@@ -32,11 +29,71 @@
                     else {
                         resumeButton.value = "機能停止";
                     }
-                    
+
                 }
             }
 
+            let searchFrame = document.getElementById("_frameSearch") as HTMLIFrameElement;
+            if (searchFrame) {
+                searchFrame.hidden = true;
+            }
+            let googleFrame = document.getElementById("_frame") as HTMLIFrameElement;
+
+            if (googleFrame) {
+                let w = googleFrame.contentWindow;
+                let d = googleFrame.contentWindow.document;
+
+                w.addEventListener("message", e => {
+                    let t = d.getElementById("searchWord") as HTMLInputElement;
+                    let word = t.value;
+                    if (e.data == "search") {
+                        this.Viewmodel.search(word);
+                    } else {
+                        this.Viewmodel.feeling(word);
+                    }
+                }, false);
+            }
+
+            this.Viewmodel.UpdateDom = x => {
+
+                googleFrame.hidden = true;
+                searchFrame.hidden = false;
+
+                searchFrame.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(x);
+            };
+        }
+    }
+
+
+    export class Webgazerviewmodel {
+
+        public UpdateDom: (x: string) => void;
+
+        public search(word: string) {
+            let uri = "https://gazefunctions.azurewebsites.net/search?q=" + word;
+            this.Get(uri).done((x: string) => {
+                this.UpdateDom(x);
+            });
+        }
+        public feeling(word: string) {
+            let uri = "https://gazefunctions.azurewebsites.net/search?q=" + word;
+            this.Get(uri).done((x: string) => {
+                this.UpdateDom(x);
+            });
         }
 
+        protected Get(url: string) {
+            let d = $.Deferred();
+            $.ajax({
+                type: "GET",
+                url: url,
+                async: true
+            }).done(x => {
+                d.resolve(x);
+            }).fail(x => {
+                d.reject(x);
+            });
+            return d.promise();
+        }
     }
 }
