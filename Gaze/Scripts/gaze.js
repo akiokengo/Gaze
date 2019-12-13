@@ -11675,10 +11675,10 @@ var Gaze;
             if (!this.IsValid) {
                 return;
             }
-            let el = this.Doc.elementFromPoint(p.X, p.Y);
+            let el = document.elementFromPoint(p.X, p.Y);
             // 何も取得できなければフレームではなく、コンテンツから探す
             if (!el) {
-                el = document.elementFromPoint(p.X, p.Y);
+                el = this.Doc.elementFromPoint(p.X, p.Y);
                 if (!el) {
                     return;
                 }
@@ -23535,8 +23535,9 @@ window.onload = function () {
  */
 function Restart() {
     document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
-    ClearCalibration();
-    PopUpInstruction();
+    return ClearCalibration().always(() => {
+        PopUpInstruction();
+    });
 }
 
 /*

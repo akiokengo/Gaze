@@ -26,9 +26,10 @@ function LoadAsync() {
 function clearIndexDBAsync() {
     let dfd = $.Deferred();
     let helper = new Gaze.IndexedDBHelper(Gaze.lzString, "db");
-    helper.Truncate().always(() => {
-        dfd.resolve();
-    });
+    dfd.resolve();
+    //helper.Truncate().always(() => {
+    //    dfd.resolve();
+    //});
     return dfd.promise();
 }
 //# sourceMappingURL=polifil.js.map
