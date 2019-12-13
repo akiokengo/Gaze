@@ -55,9 +55,9 @@ $(document).ready(function () {
     var loadAsync = LoadAsync();
     loadAsync.done(function () {
 
-        var result = confirm("既に学習したデータがあります。学習動作をスキップしますか？");
+       
 
-        if (result) {
+        
             location.href = 'webgazer.html';
             // location.href = "/Redirect/";
         }

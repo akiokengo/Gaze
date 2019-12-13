@@ -55,7 +55,7 @@ var Gaze;
             };
             let wnd = window;
             wnd.SpeechRecognition = wnd.webkitSpeechRecognition || wnd.SpeechRecognition;
-            let recognition = new window.SpeechRecognition();
+            let recognition = new wnd.SpeechRecognition();
             recognition.lang = 'ja-JP';
             recognition.continuous = true;
             recognition.onresult = e => {
