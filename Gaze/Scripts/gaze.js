@@ -11676,9 +11676,12 @@ var Gaze;
                 return;
             }
             let el = this.Doc.elementFromPoint(p.X, p.Y);
-            // 何も取得できなければ抜ける
+            // 何も取得できなければフレームではなく、コンテンツから探す
             if (!el) {
-                return;
+                el = document.elementFromPoint(p.X, p.Y);
+                if (!el) {
+                    return;
+                }
             }
             // 要素にIDが降られていなければ
             if (String.IsNullOrWhiteSpace(el.id)) {
