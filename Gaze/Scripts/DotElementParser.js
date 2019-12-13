@@ -32,10 +32,36 @@ var Gaze;
                 b = b[1];
                 return a < b ? -1 : (a > b ? 1 : 0);
             });
+            tuples = tuples.reverse();
             for (var i = 0; i < tuples.length; i++) {
-                var key = tuples[i][0];
-                var value = tuples[i][1];
+                let key = tuples[i][0];
+                let value = tuples[i][1];
+                // 指定した閾値を超える場合
+                if (this.Threshold < value) {
+                    let element = this.Doc.getElementById(key);
+                    if (this.IsInputElement(element)) {
+                        let input = element;
+                        if (input.type == "button") {
+                            input.onclick(null);
+                        }
+                    }
+                    else if (this.IsButtonElement(element)) {
+                        let button = element;
+                        button.onclick(null);
+                    }
+                }
             }
+            this.Dic = {};
+        }
+        IsInputElement(arg) {
+            return arg !== null &&
+                typeof arg === "object" &&
+                typeof arg.value === "string";
+        }
+        IsButtonElement(arg) {
+            return arg !== null &&
+                typeof arg === "object" &&
+                typeof arg.formAction === "string";
         }
         Add(p) {
             if (!this.IsValid) {

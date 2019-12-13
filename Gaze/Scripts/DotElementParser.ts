@@ -42,12 +42,41 @@
                 return a < b ? -1 : (a > b ? 1 : 0);
             });
 
-            for (var i = 0; i < tuples.length; i++) {
-                var key = tuples[i][0];
-                var value = tuples[i][1];
+            tuples = tuples.reverse();
 
+            for (var i = 0; i < tuples.length; i++) {
+                let key: string = tuples[i][0];
+                let value: number = tuples[i][1];
+
+                // 指定した閾値を超える場合
+                if (this.Threshold < value) {
+                    let element = this.Doc.getElementById(key);
+                    if (this.IsInputElement(element)) {
+                        let input = element as HTMLInputElement;
+                        if (input.type == "button") {
+                            input.onclick(null);
+                        }
+                    } else if (this.IsButtonElement(element)) {
+                        let button = element as HTMLButtonElement;
+                        button.onclick(null);
+                    }
+                }
             }
+
+            this.Dic = {};
         }
+
+        protected IsInputElement(arg: any): arg is HTMLInputElement {
+            return arg !== null &&
+                typeof arg === "object" &&
+                typeof arg.value === "string";
+        }
+        protected IsButtonElement(arg: any): arg is HTMLButtonElement {
+            return arg !== null &&
+                typeof arg === "object" &&
+                typeof arg.formAction === "string";
+        }
+
 
         public Add(p: Point) {
             if (!this.IsValid) {
@@ -70,7 +99,6 @@
             }
             this.Dic[el.id] += 1;
         }
-
 
         // http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
         // https://gist.github.com/jcxplorer/823878
