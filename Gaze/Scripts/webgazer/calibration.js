@@ -164,17 +164,27 @@ function ShowCalibrationPoint() {
     $("#Pt5").hide(); // initially hides the middle button
 }
 
-/**
-* This function clears the calibration buttons memory
-*/
-function ClearCalibration() {
-    window.localStorage.clear();
-    $(".Calibration").css('background-color', 'red');
-    $(".Calibration").css('opacity', 0.2);
-    $(".Calibration").prop('disabled', false);
 
-    CalibrationPoints = {};
-    PointCalibrate = 0;
+function ClearCalibration() {
+
+    return clearIndexDBAsync().always(() => {
+        $(".Calibration").css('background-color', 'red');
+        $(".Calibration").css('opacity', 0.2);
+        $(".Calibration").prop('disabled', false);
+
+        CalibrationPoints = {};
+        PointCalibrate = 0;
+
+
+    });
+
+    //window.localStorage.clear();
+    //$(".Calibration").css('background-color', 'red');
+    //$(".Calibration").css('opacity', 0.2);
+    //$(".Calibration").prop('disabled', false);
+
+    //CalibrationPoints = {};
+    //PointCalibrate = 0;
 }
 
 // sleep function because java doesn't have one, sourced from http://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep

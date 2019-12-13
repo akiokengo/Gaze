@@ -27,3 +27,14 @@ function LoadAsync() {
         });
     return dfd.promise();
 }
+
+function clearIndexDBAsync() {
+    let dfd = $.Deferred();
+    let helper = new Gaze.IndexedDBHelper<Gaze.lzString>(Gaze.lzString, "db");
+    helper.Truncate().always(() => {
+
+        dfd.resolve();
+    });
+
+    return dfd.promise();
+}

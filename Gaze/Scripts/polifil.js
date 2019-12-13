@@ -23,4 +23,12 @@ function LoadAsync() {
     });
     return dfd.promise();
 }
+function clearIndexDBAsync() {
+    let dfd = $.Deferred();
+    let helper = new Gaze.IndexedDBHelper(Gaze.lzString, "db");
+    helper.Truncate().always(() => {
+        dfd.resolve();
+    });
+    return dfd.promise();
+}
 //# sourceMappingURL=polifil.js.map
