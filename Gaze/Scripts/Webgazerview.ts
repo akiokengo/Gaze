@@ -11,16 +11,8 @@
             let forwardButton = document.getElementById("ForwardButton");
             let backButton = document.getElementById("BackButton");
             let resumeButton = document.getElementById("ResumeButton") as HTMLInputElement;
-            if (forwardButton) {
-                forwardButton.onclick = e => {
-                    window.history.forward();
-                }
-            }
-            if (backButton) {
-                backButton.onclick = e => {
-                    window.history.back();
-                }
-            }
+            
+            
             if (resumeButton) {
                 resumeButton.onclick = e => {
                     
@@ -48,7 +40,28 @@
                     }
                 }, false);
             }
-
+            if (forwardButton) {
+                forwardButton.onclick = e => {
+                    try {
+                        let history = searchFrame.contentWindow.history;
+                        searchFrame.contentWindow.history.forward();
+                    } catch (e) {
+                        
+                    }
+                   
+                }
+            }
+            if (backButton) {
+                backButton.onclick = e => {
+                    try {
+                        let history = searchFrame.contentWindow.history;
+                        searchFrame.contentWindow.history.back();
+                    } catch (e) {
+                        location.href = 'webgazer.html';
+                    }    
+                    
+                }
+            }
             this.Viewmodel.UpdateDom = x => {
 
                 googleFrame.hidden = true;
