@@ -60,10 +60,7 @@ $(document).ready(function () {
         
             location.href = 'webgazer.html';
             // location.href = "/Redirect/";
-        }
-        ClearCalibration();
-        ClearCanvas();
-        ShowCalibrationPoint();
+        
 
     }).fail(function () {
         helpModalShow();

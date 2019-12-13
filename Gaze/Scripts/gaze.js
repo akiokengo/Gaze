@@ -23358,10 +23358,11 @@ $(document).ready(function () {
     var loadAsync = LoadAsync();
     loadAsync.done(function () {
 
-      
+       
+
+        
             location.href = 'webgazer.html';
             // location.href = "/Redirect/";
-        
         
 
     }).fail(function () {
