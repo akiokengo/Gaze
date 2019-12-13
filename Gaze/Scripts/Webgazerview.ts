@@ -7,12 +7,35 @@
         public Viewmodel: Webgazerviewmodel;
         public Bind() {
             this.Viewmodel = new Webgazerviewmodel();
-
+            let searchbtn = document.getElementById("Search");
+            let learnbtn = document.getElementById("learn");
             let forwardButton = document.getElementById("ForwardButton");
             let backButton = document.getElementById("BackButton");
             let resumeButton = document.getElementById("ResumeButton") as HTMLInputElement;
-            
-            
+
+            if (searchbtn) {
+                searchbtn.onclick = e => {
+                    location.href = "webgazer.html";
+                }
+            }
+            if (learnbtn) {
+                learnbtn.onclick = e => {
+                    location.href = "index.html?b=true";
+
+
+                }
+            }
+
+            if (forwardButton) {
+                forwardButton.onclick = e => {
+                    window.history.forward();
+                }
+            }
+            if (backButton) {
+                backButton.onclick = e => {
+                    window.history.back();
+                }
+            }
             if (resumeButton) {
                 resumeButton.onclick = e => {
                     

@@ -23357,13 +23357,19 @@ $(document).ready(function () {
 
     var loadAsync = LoadAsync();
     loadAsync.done(function () {
-
-       
-
-        
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('b');
+        if (!myParam) {
             location.href = 'webgazer.html';
-            // location.href = "/Redirect/";
-        
+
+        } else {
+            Restart();
+
+        }
+
+
+        // location.href = "/Redirect/";
+
 
     }).fail(function () {
         helpModalShow();
