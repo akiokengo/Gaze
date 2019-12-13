@@ -53,6 +53,23 @@ var Gaze;
                 //x = x.replace('<a href="/url?q=', `<a href="${location.origin}/url?q=`,)
                 searchFrame.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(uri);
             };
+            let wnd = window;
+            wnd.SpeechRecognition = wnd.webkitSpeechRecognition || wnd.SpeechRecognition;
+            let recognition = new window.SpeechRecognition();
+            recognition.lang = 'ja-JP';
+            recognition.continuous = true;
+            recognition.onresult = e => {
+                let result = e.results[e.results.length - 1];
+                this.Speech2Text(result[0].transcript);
+            };
+            recognition.start();
+        }
+        Speech2Text(text) {
+            let googleFrame = document.getElementById("_frame");
+            let w = googleFrame.contentWindow;
+            let d = googleFrame.contentWindow.document;
+            let t = d.getElementById("searchWord");
+            t.value = text;
         }
     }
     Gaze.Webgazerview = Webgazerview;
