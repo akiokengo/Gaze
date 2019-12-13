@@ -51,6 +51,27 @@ var Gaze;
                     }
                 }, false);
             }
+            if (forwardButton) {
+                forwardButton.onclick = e => {
+                    try {
+                        let history = searchFrame.contentWindow.history;
+                        searchFrame.contentWindow.history.forward();
+                    }
+                    catch (e) {
+                    }
+                };
+            }
+            if (backButton) {
+                backButton.onclick = e => {
+                    try {
+                        let history = searchFrame.contentWindow.history;
+                        searchFrame.contentWindow.history.back();
+                    }
+                    catch (e) {
+                        location.href = 'webgazer.html';
+                    }
+                };
+            }
             this.Viewmodel.UpdateDom = x => {
                 googleFrame.hidden = true;
                 searchFrame.hidden = false;
