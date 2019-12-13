@@ -4,15 +4,22 @@ export default class search {
     public execute(req: express.Request, res: express.Response, next: express.NextFunction) {
         let arr = new Array<string>();
 
-        let queryString = req.query["q"];       
-        arr.push(`q=${queryString}`);
-        arr.push(`rlz=1C1CHBD_jaJP858JP858`);
+        // http://www13.plala.or.jp/bigdata/google.html
+        arr.push(`lr=lang_ja`);
+        arr.push(`hl=ja`);
+        arr.push(`inlang=ja`);
+        arr.push(`ie=utf-8`);
+        arr.push(`oe=utf-8`);
+
         let startCount = req.query["start"];
         if (startCount) {
             arr.push(`start=${startCount}`);
         }
 
-        let uri = `https://www.google.com/search?${arr.join("&")}`;
+        let queryString = encodeURIComponent(req.query["q"]);
+        arr.push(`q=${queryString}`);
+
+        let uri = `https://www.google.co.jp/search?${arr.join("&")}`;
         scraperjs.StaticScraper.create(uri)
             .scrape($ => {
                 return $.html();

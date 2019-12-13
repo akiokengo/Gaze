@@ -35,9 +35,11 @@
     <script src="Scripts/model/model.js"></script>
     <script src="Scripts/polifil.js"></script>
     <script>
-
-        let view = new Gaze.Webgazerview();
-        view.Bind();
+        let dom = $("body");
+        dom.ready(function (e) {
+            let view = new Gaze.Webgazerview();
+            view.Bind();
+        });
     </script>
 </body>
 </html>

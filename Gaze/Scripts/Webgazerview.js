@@ -36,7 +36,7 @@ var Gaze;
                 let d = googleFrame.contentWindow.document;
                 w.addEventListener("message", e => {
                     let t = d.getElementById("searchWord");
-                    let word = t.value;
+                    let word = encodeURIComponent(t.value);
                     if (e.data == "search") {
                         this.Viewmodel.search(word);
                     }

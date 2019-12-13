@@ -95,6 +95,7 @@
     <Content Include="Global.asax" />
     <Content Include="Google.html" />
     <Content Include="package.json" />
+    <Content Include="play.html" />
     <Content Include="Scripts\DotElementParser.js" />
     <Content Include="Scripts\gaze.min.js">
       <DependentUpon>gaze.js</DependentUpon>
@@ -113,6 +114,7 @@
     <Content Include="Scripts\Median.js" />
     <Content Include="Scripts\model\model.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\play.js" />
     <Content Include="Scripts\polifil.js" />
     <Content Include="Scripts\Webgazerview.js" />
     <Content Include="Scripts\webgazer\calibration.js" />
@@ -169,6 +171,7 @@
     <TypeScriptCompile Include="Scripts\indexDB.ts" />
     <TypeScriptCompile Include="Scripts\Median.ts" />
     <TypeScriptCompile Include="Scripts\model\model.ts" />
+    <TypeScriptCompile Include="Scripts\play.ts" />
     <TypeScriptCompile Include="Scripts\polifil.ts" />
     <TypeScriptCompile Include="webgazer.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\bootstrap\index.d.ts" />

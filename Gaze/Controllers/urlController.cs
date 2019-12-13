@@ -12,6 +12,17 @@ namespace TypeScriptHTMLApp1.Controllers
         public ActionResult Index()
         {
             var q = this.Request.QueryString["q"];
+
+            if (q.StartsWith("https://www.youtube.com/watch"))
+            {
+                var enc = HttpUtility.UrlDecode(q);
+                var url = new Uri(enc);
+                var queryString = HttpUtility.ParseQueryString(url.Query);
+                var id = queryString["v"];
+                // 自前のサイトに飛ばす
+                return Redirect($"play.html?v={id}");
+            }
+
             return Redirect(q);
         }
     }

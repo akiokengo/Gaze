@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Youtube Player</title>
+
+
+    <link rel="stylesheet" href="./Content/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="./Content/Google.css">
+    <script src="Scripts/jquery-3.4.1.js"></script>
+    <script src="Scripts/Extensions/StringExtensions.js"></script>
+    <script src="Scripts/play.js"></script>
+</head>
+<body>
+    <div style="margin-left:50px">
+        <iframe id="ytplayer" type="text/html"
+                frameborder="0"></iframe>
+    </div>
+    <script>
+        let dom = $("body");
+        dom.ready(function (e) {
+            let view = new Gaze.PlayView();
+            view.Bind();
+        });
+    </script>
+</body>
+</html>

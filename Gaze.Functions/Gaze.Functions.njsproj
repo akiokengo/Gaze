@@ -34,6 +34,7 @@
     <None Include="app.ts" />
     <None Include="routes\index.ts" />
     <None Include="GazeFunctions - Web Deploy.pubxml" />
+    <None Include="GazeFunctions - Web Deploy1.pubxml" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json">
       <Publish>False</Publish>

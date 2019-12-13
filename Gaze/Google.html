@@ -40,8 +40,11 @@
     </div>
 
     <script>
-        let view = new Gaze.google_CtrlView();
-        view.Bind();
+        let dom = $("#_google");
+        dom.ready(function (e) {
+            let view = new Gaze.google_CtrlView();
+            view.Bind();
+        });
     </script>
 </body>
 </html>

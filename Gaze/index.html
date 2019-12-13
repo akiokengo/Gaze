@@ -81,8 +81,11 @@
             </div>
         </div>
         <script>
-            let view = new Gaze.IndexView();
-            view.Bind();
+            let dom = $("#helpModal");
+            dom.ready(function (e) {
+                let view = new Gaze.IndexView();
+                view.Bind();
+            });
         </script>
     </div>
 

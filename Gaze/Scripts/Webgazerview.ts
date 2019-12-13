@@ -45,7 +45,7 @@
 
                 w.addEventListener("message", e => {
                     let t = d.getElementById("searchWord") as HTMLInputElement;
-                    let word = t.value;
+                    let word = encodeURIComponent(t.value);
                     if (e.data == "search") {
                         this.Viewmodel.search(word);
                     } else {
