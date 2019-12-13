@@ -18,12 +18,6 @@ var Gaze;
             }
             if (resumeButton) {
                 resumeButton.onclick = e => {
-                    if (resumeButton.value == "機能停止") {
-                        resumeButton.value = "機能再開";
-                    }
-                    else {
-                        resumeButton.value = "機能停止";
-                    }
                 };
             }
             let searchFrame = document.getElementById("_frameSearch");
