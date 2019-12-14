@@ -12,6 +12,8 @@
             let forwardButton = document.getElementById("ForwardButton");
             let backButton = document.getElementById("BackButton");
             let resumeButton = document.getElementById("ResumeButton") as HTMLInputElement;
+            let scrollupbtn = document.getElementById("Scrollup");
+            let scrolldownbtn = document.getElementById("Scrolldown");
 
             if (searchbtn) {
                 searchbtn.onclick = e => {
@@ -42,6 +44,21 @@
 
                 }
             }
+
+            if (scrolldownbtn) {
+                scrolldownbtn.onclick = e => {
+                    let frame = document.getElementById("_frameSearch");
+                    frame.scrollBy(0, 100);
+                }
+            }
+
+            if (scrollupbtn) {
+                scrolldownbtn.onclick = e => {
+                    let frame = document.getElementById("_frameSearch");
+                    frame.scrollBy(0, -100);
+                }
+            }
+
 
             let searchFrame = document.getElementById("_frameSearch") as HTMLIFrameElement;
             if (searchFrame) {

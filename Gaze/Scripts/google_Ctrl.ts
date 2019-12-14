@@ -4,14 +4,18 @@
         public ViewModel: google_CtrlViewModel;
         public Bind() {
             this.ViewModel = new google_CtrlViewModel();
+
             let btn1b = document.getElementById('searchButton');
             if (btn1b) {
                 btn1b.onclick = e => this.ViewModel.searchAction();
             }
+
             let btn2b = document.getElementById("feelingButton");
             if (btn2b) {
                 btn2b.onclick = e => this.ViewModel.feelingAction();
             }
+
+            
 
             let input = document.getElementById("searchWord") as HTMLInputElement;
             if (input) {
