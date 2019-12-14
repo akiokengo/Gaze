@@ -11647,6 +11647,9 @@ var Gaze;
                 // 指定した閾値を超える場合
                 if (this.Threshold < value) {
                     let element = this.Doc.getElementById(key);
+                    if (!element) {
+                        element = document.getElementById(key);
+                    }
                     if (this.IsInputElement(element)) {
                         let input = element;
                         if (input.type == "button") {
@@ -11675,23 +11678,32 @@ var Gaze;
             if (!this.IsValid) {
                 return;
             }
+            // 親要素と、子要素のどちらも探す。まずは親
             let el = document.elementFromPoint(p.X, p.Y);
-            // 何も取得できなければフレームではなく、コンテンツから探す
-            if (!el) {
-                el = this.Doc.elementFromPoint(p.X, p.Y);
-                if (!el) {
-                    return;
+            if (el) {
+                // 要素にIDが降られていなければ
+                if (String.IsNullOrWhiteSpace(el.id)) {
+                    // 一意な文字列を割り当てる
+                    el.id = this.NewUid();
                 }
+                if (!this.Dic[el.id]) {
+                    this.Dic[el.id] = 0;
+                }
+                this.Dic[el.id] += 1;
             }
-            // 要素にIDが降られていなければ
-            if (String.IsNullOrWhiteSpace(el.id)) {
-                // 一意な文字列を割り当てる
-                el.id = this.NewUid();
+            //子
+            el = this.Doc.elementFromPoint(p.X, p.Y);
+            if (el) {
+                // 要素にIDが降られていなければ
+                if (String.IsNullOrWhiteSpace(el.id)) {
+                    // 一意な文字列を割り当てる
+                    el.id = this.NewUid();
+                }
+                if (!this.Dic[el.id]) {
+                    this.Dic[el.id] = 0;
+                }
+                this.Dic[el.id] += 1;
             }
-            if (!this.Dic[el.id]) {
-                this.Dic[el.id] = 0;
-            }
-            this.Dic[el.id] += 1;
         }
         // http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
         // https://gist.github.com/jcxplorer/823878
