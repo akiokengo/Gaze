@@ -136,12 +136,12 @@
          * sclollup:上にスクロール
          * */
         public scrolldown(): void {
-            let frame = document.getElementById("_frame");
+            let frame = document.getElementById("_frameSearch");
             frame.scrollBy(0, 100);
            
         }
         public scrollup(): void {
-            let frame = document.getElementById("_frame");
+            let frame = document.getElementById("_frameSearch");
             frame.scrollBy(0, -100);
         }
     }
