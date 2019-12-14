@@ -46,4 +46,34 @@
         }
     }
 
+    export class ScrollMedian {
+        protected Queue = new Array<Point>();
+        public Add(x: number, y: number) {
+            this.Queue.push({ X: x, Y: y });
+        }
+
+        public Generate(): Point {
+            let half = (this.Queue.length / 2) | 0;
+            let xSort = this.Queue.map(p => p.X).sort();
+            let ySort = this.Queue.map(p => p.Y).sort();
+
+            let xMedian = this.Parse(xSort, half);
+            let yMedian = this.Parse(ySort, half);
+
+            let result = {
+                X: xMedian,
+                Y: yMedian
+            };
+
+            this.Queue = new Array<Point>();
+            return result;
+        }
+        protected Parse(arr: number[], half: number) {
+            if (arr.length % 2) {
+                return arr[half];
+            }
+            return (arr[half - 1] + arr[half]) / 2;
+        }
+    }
+
 }

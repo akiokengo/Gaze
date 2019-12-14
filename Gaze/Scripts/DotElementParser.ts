@@ -5,6 +5,8 @@
         protected Dic: { [key: string]: number } = {};
         protected Threshold: number;
         protected IsValid = false;
+        protected ScrollMedian: ScrollMedian = new ScrollMedian();
+
         protected get Doc(): Document {
             let frame = $("#_frame")[0] as HTMLIFrameElement;
             return frame.contentWindow.document;
@@ -25,8 +27,19 @@
                 this.Parse();
             }, msec);
 
+            // 指定時間経過後に、判定
+            setInterval(() => {
+                this.ParseScroll();
+            }, msec / 3);
         }
 
+        protected ParseScroll() {
+            let frame = document.getElementById("_frameSearch") as HTMLIFrameElement;
+
+
+
+
+        }
 
         /**
          * 視線をもとに、処理を実装する
@@ -87,6 +100,8 @@
                 return;
             }
 
+            this.ScrollMedian.Add(p.X, p.Y);
+
             // 親要素と、子要素のどちらも探す。まずは親
             let el = document.elementFromPoint(p.X, p.Y);
             if (el) {
@@ -130,19 +145,23 @@
             return uuid;
         }
 
+        // https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo
+        // https://stackoverflow.com/questions/1192228/scrolling-an-iframe-with-javascript
         /*
          *スクロールメソッドの定義
          * sclolldown:下にスクロール
          * sclollup:上にスクロール
          * */
         public scrolldown(): void {
-            let frame = document.getElementById("_frameSearch");
-            frame.scrollBy(0, 100);
-           
+            let frame = document.getElementById("_frameSearch") as HTMLIFrameElement;
+            var top = frame.contentWindow.scrollY;
+            frame.contentWindow.scrollTo(0, top + 100);
+
         }
         public scrollup(): void {
-            let frame = document.getElementById("_frameSearch");
-            frame.scrollBy(0, -100);
+            let frame = document.getElementById("_frameSearch") as HTMLIFrameElement;
+            var top = frame.contentWindow.scrollY;
+            frame.contentWindow.scrollTo(0, top - 100);
         }
     }
 }

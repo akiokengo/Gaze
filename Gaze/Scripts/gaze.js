@@ -11604,6 +11604,34 @@ var Gaze;
         }
     }
     Gaze.Median = Median;
+    class ScrollMedian {
+        constructor() {
+            this.Queue = new Array();
+        }
+        Add(x, y) {
+            this.Queue.push({ X: x, Y: y });
+        }
+        Generate() {
+            let half = (this.Queue.length / 2) | 0;
+            let xSort = this.Queue.map(p => p.X).sort();
+            let ySort = this.Queue.map(p => p.Y).sort();
+            let xMedian = this.Parse(xSort, half);
+            let yMedian = this.Parse(ySort, half);
+            let result = {
+                X: xMedian,
+                Y: yMedian
+            };
+            this.Queue = new Array();
+            return result;
+        }
+        Parse(arr, half) {
+            if (arr.length % 2) {
+                return arr[half];
+            }
+            return (arr[half - 1] + arr[half]) / 2;
+        }
+    }
+    Gaze.ScrollMedian = ScrollMedian;
 })(Gaze || (Gaze = {}));
 //# sourceMappingURL=Median.js.map
 var Gaze;
@@ -11612,6 +11640,7 @@ var Gaze;
         constructor(msec, threshold) {
             this.Dic = {};
             this.IsValid = false;
+            this.ScrollMedian = new Gaze.ScrollMedian();
             this.Threshold = threshold;
             // IFrame上のDocumentを取得する
             let f = $("#_frame");
@@ -11623,10 +11652,17 @@ var Gaze;
             setInterval(() => {
                 this.Parse();
             }, msec);
+            // 指定時間経過後に、判定
+            setInterval(() => {
+                this.ParseScroll();
+            }, msec / 3);
         }
         get Doc() {
             let frame = $("#_frame")[0];
             return frame.contentWindow.document;
+        }
+        ParseScroll() {
+            let frame = document.getElementById("_frameSearch");
         }
         /**
          * 視線をもとに、処理を実装する
@@ -11678,6 +11714,7 @@ var Gaze;
             if (!this.IsValid) {
                 return;
             }
+            this.ScrollMedian.Add(p.X, p.Y);
             // 親要素と、子要素のどちらも探す。まずは親
             let el = document.elementFromPoint(p.X, p.Y);
             if (el) {
@@ -11717,6 +11754,23 @@ var Gaze;
                 uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
             }
             return uuid;
+        }
+        // https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo
+        // https://stackoverflow.com/questions/1192228/scrolling-an-iframe-with-javascript
+        /*
+         *スクロールメソッドの定義
+         * sclolldown:下にスクロール
+         * sclollup:上にスクロール
+         * */
+        scrolldown() {
+            let frame = document.getElementById("_frameSearch");
+            var top = frame.contentWindow.scrollY;
+            frame.contentWindow.scrollTo(0, top + 100);
+        }
+        scrollup() {
+            let frame = document.getElementById("_frameSearch");
+            var top = frame.contentWindow.scrollY;
+            frame.contentWindow.scrollTo(0, top - 100);
         }
     }
     Gaze.DotElementParser = DotElementParser;

@@ -4,6 +4,7 @@ var Gaze;
         constructor(msec, threshold) {
             this.Dic = {};
             this.IsValid = false;
+            this.ScrollMedian = new Gaze.ScrollMedian();
             this.Threshold = threshold;
             // IFrame上のDocumentを取得する
             let f = $("#_frame");
@@ -15,10 +16,17 @@ var Gaze;
             setInterval(() => {
                 this.Parse();
             }, msec);
+            // 指定時間経過後に、判定
+            setInterval(() => {
+                this.ParseScroll();
+            }, msec / 3);
         }
         get Doc() {
             let frame = $("#_frame")[0];
             return frame.contentWindow.document;
+        }
+        ParseScroll() {
+            let frame = document.getElementById("_frameSearch");
         }
         /**
          * 視線をもとに、処理を実装する
@@ -70,6 +78,7 @@ var Gaze;
             if (!this.IsValid) {
                 return;
             }
+            this.ScrollMedian.Add(p.X, p.Y);
             // 親要素と、子要素のどちらも探す。まずは親
             let el = document.elementFromPoint(p.X, p.Y);
             if (el) {
@@ -109,6 +118,23 @@ var Gaze;
                 uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
             }
             return uuid;
+        }
+        // https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo
+        // https://stackoverflow.com/questions/1192228/scrolling-an-iframe-with-javascript
+        /*
+         *スクロールメソッドの定義
+         * sclolldown:下にスクロール
+         * sclollup:上にスクロール
+         * */
+        scrolldown() {
+            let frame = document.getElementById("_frameSearch");
+            var top = frame.contentWindow.scrollY;
+            frame.contentWindow.scrollTo(0, top + 100);
+        }
+        scrollup() {
+            let frame = document.getElementById("_frameSearch");
+            var top = frame.contentWindow.scrollY;
+            frame.contentWindow.scrollTo(0, top - 100);
         }
     }
     Gaze.DotElementParser = DotElementParser;
