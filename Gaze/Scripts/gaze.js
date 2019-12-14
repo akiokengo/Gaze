@@ -11718,6 +11718,19 @@ var Gaze;
             }
             return uuid;
         }
+        /*
+         *スクロールメソッドの定義
+         * sclolldown:下にスクロール
+         * sclollup:上にスクロール
+         * */
+        scrolldown() {
+            let frame = document.getElementById("_frameSearch");
+            frame.scrollBy(0, 100);
+        }
+        scrollup() {
+            let frame = document.getElementById("_frameSearch");
+            frame.scrollBy(0, -100);
+        }
     }
     Gaze.DotElementParser = DotElementParser;
 })(Gaze || (Gaze = {}));
