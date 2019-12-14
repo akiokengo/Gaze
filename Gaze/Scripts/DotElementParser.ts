@@ -129,5 +129,23 @@
             }
             return uuid;
         }
+
+        /*
+         *スクロールメソッドの定義
+         * sclolldown:下にスクロール
+         * sclollup:上にスクロール
+         * */
+        public scrolldown(): void {
+            let frame = $("#_frame")[0] as HTMLIFrameElement;
+            frame.onload = function () {
+                frame.contentWindow.scrollBy(0, 100);
+            }
+        }
+        public scrollup(): void {
+            let frame = $("#_frame")[0] as HTMLIFrameElement;
+            frame.onload = function () {
+                frame.contentWindow.scrollBy(0, -100);
+            }
+        }
     }
 }
