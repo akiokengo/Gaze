@@ -5,13 +5,31 @@ var Gaze;
             this.Dic = {};
             this.IsValid = false;
             this.ScrollMedian = new Gaze.ScrollMedian();
+            this._buffGooglePonter = new Array();
             this.Threshold = threshold;
-            // IFrame上のDocumentを取得する
-            let f = $("#_frame");
-            if (f.length == 0) {
+            // IFrameが存在するか確認
+            this.GoogleFrame = document.getElementById("_frame");
+            this.SearchFrame = document.getElementById("_frameSearch");
+            if (!this.GoogleFrame || !this.SearchFrame) {
                 return;
             }
             this.IsValid = true;
+            //子①GoogleFrame（同一オリジンなので、やりやすい）
+            this.GoogleFrame.contentWindow.addEventListener("message", e => {
+                if (!e.data) {
+                    return;
+                }
+                let request = JSON.parse(e.data);
+                if (!request) {
+                    return;
+                }
+                // 視線の先にあるコンテンツを登録する
+                if (request.message == "RePosition-1") {
+                    if (request.id) {
+                        this.Increment(request.id);
+                    }
+                }
+            });
             // 指定時間経過後に、判定
             setInterval(() => {
                 this.Parse();
@@ -19,14 +37,50 @@ var Gaze;
             // 指定時間経過後に、判定
             setInterval(() => {
                 this.ParseScroll();
-            }, msec / 3);
-        }
-        get Doc() {
-            let frame = $("#_frame")[0];
-            return frame.contentWindow.document;
+            }, msec / 10);
         }
         ParseScroll() {
+            let median = this.ScrollMedian.Generate();
             let frame = document.getElementById("_frameSearch");
+            let request = {
+                message: "ParseScroll",
+                scrollMedian: median
+            };
+            let json = JSON.stringify(request);
+            frame.contentWindow.postMessage(json, "*");
+            //window.addEventListener("message", e => {
+            //    if (!e.data) {
+            //        return;
+            //    }
+            //    let request: {
+            //        message: string,
+            //        scrollMedian: {
+            //            X: number,
+            //            Y: number
+            //        }
+            //    } = JSON.parse(e.data);
+            //    if (!request) {
+            //        return;
+            //    }
+            //    if (request.message == "ParseScroll") {
+            //        let scrollingElement = document.scrollingElement;
+            //        let clientHeight = scrollingElement.clientHeight;
+            //        let clientWidth = scrollingElement.clientWidth;
+            //        if (clientHeight == 0 || clientWidth == 0) {
+            //            return;
+            //        }
+            //        let h = scrollingElement.scrollHeight;
+            //        let w = scrollingElement.scrollWidth;
+            //        // ディスプレイの↓ばかりみてた場合
+            //        const adjust = 300;
+            //        if ((clientHeight - adjust) < request.scrollMedian.Y) {
+            //            scrollingElement.scrollTop += 100;
+            //        } else if (request.scrollMedian.Y < adjust) {
+            //            // ↑ばかりみてた場合
+            //            scrollingElement.scrollTop -= 100;
+            //        }
+            //    }
+            //});
         }
         /**
          * 視線をもとに、処理を実装する
@@ -46,20 +100,19 @@ var Gaze;
                 let value = tuples[i][1];
                 // 指定した閾値を超える場合
                 if (this.Threshold < value) {
-                    let element = this.Doc.getElementById(key);
-                    if (!element) {
-                        element = document.getElementById(key);
-                    }
-                    if (this.IsInputElement(element)) {
-                        let input = element;
-                        if (input.type == "button") {
-                            input.onclick(null);
-                        }
-                    }
-                    else if (this.IsButtonElement(element)) {
-                        let button = element;
-                        button.onclick(null);
-                    }
+                    //let element = this.Doc.getElementById(key);
+                    //if (!element) {
+                    //    element = document.getElementById(key);
+                    //}
+                    //if (this.IsInputElement(element)) {
+                    //    let input = element as HTMLInputElement;
+                    //    if (input.type == "button") {
+                    //        input.onclick(null);
+                    //    }
+                    //} else if (this.IsButtonElement(element)) {
+                    //    let button = element as HTMLButtonElement;
+                    //    button.onclick(null);
+                    //}
                 }
             }
             this.Dic = {};
@@ -79,45 +132,63 @@ var Gaze;
                 return;
             }
             this.ScrollMedian.Add(p.X, p.Y);
-            // 親要素と、子要素のどちらも探す。まずは親
+            // 親要素(主に左側の6個のボタン)
             let el = document.elementFromPoint(p.X, p.Y);
             if (el) {
                 // 要素にIDが降られていなければ
                 if (String.IsNullOrWhiteSpace(el.id)) {
                     // 一意な文字列を割り当てる
-                    el.id = this.NewUid();
+                    el.id = NewUid();
                 }
-                if (!this.Dic[el.id]) {
-                    this.Dic[el.id] = 0;
-                }
-                this.Dic[el.id] += 1;
+                this.Increment(el.id);
             }
-            //子
-            el = this.Doc.elementFromPoint(p.X, p.Y);
-            if (el) {
-                // 要素にIDが降られていなければ
-                if (String.IsNullOrWhiteSpace(el.id)) {
-                    // 一意な文字列を割り当てる
-                    el.id = this.NewUid();
-                }
-                if (!this.Dic[el.id]) {
-                    this.Dic[el.id] = 0;
-                }
-                this.Dic[el.id] += 1;
+            //子①GoogleFrame（同一オリジンなので、やりやすい）
+            //this.AddGoogleSearch(p);
+            let googleWindow = this.GoogleFrame.contentWindow;
+            let request = {
+                message: "Position",
+                median: p
+            };
+            googleWindow.postMessage(JSON.stringify(request), location.origin);
+            ////子②SearchFrame（こっちはスクレイピングしたオリジンが異なるものなので、黒魔法が必要）
+            //let searchWindow = this.SearchFrame.contentWindow;
+            //el = this.Doc.elementFromPoint(p.X, p.Y);
+            //if (el) {
+            //    // 要素にIDが降られていなければ
+            //    if (String.IsNullOrWhiteSpace(el.id)) {
+            //        // 一意な文字列を割り当てる
+            //        el.id = this.NewUid();
+            //    }
+            //    if (!this.Dic[el.id]) {
+            //        this.Dic[el.id] = 0;
+            //    }
+            //    this.Dic[el.id] += 1;
+            //}
+        }
+        /**
+         * マシンパフォーマンスが低い場合は、一括でやるほうも検討する
+         * @param p
+         */
+        AddGoogleSearch(p) {
+            if (100 < this._buffGooglePonter.length) {
+                //子①GoogleFrame（同一オリジンなので、やりやすい）
+                let googleWindow = this.GoogleFrame.contentWindow;
+                let request = {
+                    message: "Position",
+                    median: p
+                };
+                googleWindow.postMessage(JSON.stringify(request), location.origin);
+                this._buffGooglePonter = new Array();
+            }
+            else {
+                this._buffGooglePonter.push(p);
             }
         }
-        // http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-        // https://gist.github.com/jcxplorer/823878
-        NewUid() {
-            let uuid = "", i, random;
-            for (i = 0; i < 32; i++) {
-                random = Math.random() * 16 | 0;
-                if (i == 8 || i == 12 || i == 16 || i == 20) {
-                    uuid += "-";
-                }
-                uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+        Increment(id) {
+            if (!this.Dic[id]) {
+                this.Dic[id] = 0;
             }
-            return uuid;
+            this.Dic[id] += 1;
         }
         // https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo
         // https://stackoverflow.com/questions/1192228/scrolling-an-iframe-with-javascript

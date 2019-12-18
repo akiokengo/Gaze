@@ -16,6 +16,31 @@ var Gaze;
             if (input) {
                 this.ViewModel.searchWord = () => input.value;
             }
+            window.addEventListener("message", e => {
+                if (!e.data) {
+                    return;
+                }
+                let request = JSON.parse(e.data);
+                if (!request) {
+                    return;
+                }
+                if (request.message == "Position") {
+                    let el = document.elementFromPoint(request.median.X, request.median.Y);
+                    if (el) {
+                        // 要素にIDが降られていなければ
+                        if (String.IsNullOrWhiteSpace(el.id)) {
+                            // 一意な文字列を割り当てる
+                            el.id = NewUid();
+                        }
+                        let response = {
+                            message: "RePosition-1",
+                            id: el.id,
+                        };
+                        // 送信先に変身する
+                        window.postMessage(JSON.stringify(response), e.origin);
+                    }
+                }
+            });
         }
     }
     Gaze.google_CtrlView = google_CtrlView;

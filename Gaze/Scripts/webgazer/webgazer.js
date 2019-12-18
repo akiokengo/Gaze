@@ -10728,8 +10728,9 @@ function store_points(x, y, k) {
     //var Y_Coordinate = 0;
     //var Flagint = 0;
 
-    var pMedian = new Gaze.Median(3 /* 中央値をとるためのサンプル数 */);
-    var dotParser = new Gaze.DotElementParser(10 * 1000 /* msec */, 30 /* 回で検知 */);
+
+    var pMedian = new Gaze.Median(1 /* 中央値をとるためのサンプル数 */);
+    var dotParser = new Gaze.DotElementParser(5 * 1000 /* msec */, 30 /* 回で検知 */);
     function loop() {
 
         if (!paused) {

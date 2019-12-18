@@ -40,7 +40,7 @@
             }
             if (resumeButton) {
                 resumeButton.onclick = e => {
-                    
+
 
                 }
             }
@@ -75,7 +75,7 @@
                     let word = encodeURIComponent(t.value);
                     if (e.data == "search") {
                         this.Viewmodel.search(word);
-                    } else {
+                    } else if (e.data == "feeling") {
                         this.Viewmodel.feeling(word);
                     }
                 }, false);
@@ -86,9 +86,9 @@
                         let history = searchFrame.contentWindow.history;
                         searchFrame.contentWindow.history.forward();
                     } catch (e) {
-                        
+
                     }
-                   
+
                 }
             }
             if (backButton) {
@@ -98,8 +98,8 @@
                         searchFrame.contentWindow.history.back();
                     } catch (e) {
                         location.href = 'webgazer.html';
-                    }    
-                    
+                    }
+
                 }
             }
             this.Viewmodel.UpdateDom = x => {
@@ -107,10 +107,22 @@
                 googleFrame.hidden = true;
                 searchFrame.hidden = false;
                 let arr = x.split('<a href="/url?q=');
-                let uri = arr.join(`<a href="${location.origin}/url?q=`);
+                let html = arr.join(`<a href="${location.origin}/url?q=`);
                 //x = x.replace('<a href="/url?q=', `<a href="${location.origin}/url?q=`,)
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(html, "text/html");
 
-                searchFrame.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(uri);
+
+
+                let newScript = document.createElement("script");
+                let inlineScript = document.createTextNode(this.GenerateScript());
+                newScript.appendChild(inlineScript);
+                // 
+                doc.body.appendChild(newScript);
+
+                let newHtml = doc.documentElement.innerHTML;
+
+                searchFrame.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(newHtml);
 
             };
 
@@ -124,6 +136,55 @@
                 this.Speech2Text(result[0].transcript);
             };
             recognition.start();
+        }
+
+        protected GenerateScript() {
+            return `
+            window.addEventListener("message", e => {
+                if (!e.data) {
+                    return;
+                }
+                let request = JSON.parse(e.data);
+                if (!request) {
+                    return;
+                }
+                if (request.message == "ParseScroll") {
+                    let scrollingElement = document.scrollingElement;
+                    let clientHeight = scrollingElement.clientHeight;
+                    let clientWidth = scrollingElement.clientWidth;
+                    if (clientHeight == 0 || clientWidth == 0) {
+                        return;
+                    }
+                    let h = scrollingElement.scrollHeight;
+                    let w = scrollingElement.scrollWidth;
+                    // ディスプレイの↓ばかりみてた場合
+                    if ((clientHeight - 300) < request.scrollMedian.Y) {
+                        scrollingElement.scrollTop += 100;
+                    }
+                    else if (request.scrollMedian.Y < 200) {
+                        // ↑ばかりみてた場合
+                        scrollingElement.scrollTop -= 100;
+                    }
+                }
+                if (request.message == "Position") {
+                    let el = document.elementFromPoint(request.median.X, request.median.Y);
+                    if (el) {
+                        // 要素にIDが降られていなければ
+                        if (String.IsNullOrWhiteSpace(el.id)) {
+                            // 一意な文字列を割り当てる
+                            el.id = NewUid();
+                        }
+                        let response = {
+                            message: "RePosition-1",
+                            id: el.id,
+                        };
+                        // 送信先に変身する
+                        window.postMessage(JSON.stringify(response), e.origin);
+                    }
+                }
+
+            });
+`;
         }
 
         public Speech2Text(text: string) {
