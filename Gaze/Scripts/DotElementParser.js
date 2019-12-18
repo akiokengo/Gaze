@@ -14,8 +14,7 @@ var Gaze;
                 return;
             }
             this.IsValid = true;
-            //子①GoogleFrame（同一オリジンなので、やりやすい）
-            this.GoogleFrame.contentWindow.addEventListener("message", e => {
+            window.addEventListener("message", e => {
                 if (!e.data) {
                     return;
                 }
@@ -23,10 +22,15 @@ var Gaze;
                 if (!request) {
                     return;
                 }
-                // 視線の先にあるコンテンツを登録する
+                // 子①GoogleFrameの視線の先にあるコンテンツを登録する
                 if (request.message == "RePosition-1") {
                     if (request.id) {
-                        this.Increment(request.id);
+                        this.Increment(request.id, "GoogleFrame");
+                    }
+                }
+                else if (request.message == "RePosition-2") {
+                    if (request.id) {
+                        this.Increment(request.id, "SearchFrame");
                     }
                 }
             });
@@ -46,41 +50,9 @@ var Gaze;
                 message: "ParseScroll",
                 scrollMedian: median
             };
+            // スクロール対象は、_frameSearchのみなので、直指定でメッセージ通知
             let json = JSON.stringify(request);
             frame.contentWindow.postMessage(json, "*");
-            //window.addEventListener("message", e => {
-            //    if (!e.data) {
-            //        return;
-            //    }
-            //    let request: {
-            //        message: string,
-            //        scrollMedian: {
-            //            X: number,
-            //            Y: number
-            //        }
-            //    } = JSON.parse(e.data);
-            //    if (!request) {
-            //        return;
-            //    }
-            //    if (request.message == "ParseScroll") {
-            //        let scrollingElement = document.scrollingElement;
-            //        let clientHeight = scrollingElement.clientHeight;
-            //        let clientWidth = scrollingElement.clientWidth;
-            //        if (clientHeight == 0 || clientWidth == 0) {
-            //            return;
-            //        }
-            //        let h = scrollingElement.scrollHeight;
-            //        let w = scrollingElement.scrollWidth;
-            //        // ディスプレイの↓ばかりみてた場合
-            //        const adjust = 300;
-            //        if ((clientHeight - adjust) < request.scrollMedian.Y) {
-            //            scrollingElement.scrollTop += 100;
-            //        } else if (request.scrollMedian.Y < adjust) {
-            //            // ↑ばかりみてた場合
-            //            scrollingElement.scrollTop -= 100;
-            //        }
-            //    }
-            //});
         }
         /**
          * 視線をもとに、処理を実装する
@@ -140,7 +112,7 @@ var Gaze;
                     // 一意な文字列を割り当てる
                     el.id = NewUid();
                 }
-                this.Increment(el.id);
+                this.Increment(el.id, "root");
             }
             //子①GoogleFrame（同一オリジンなので、やりやすい）
             //this.AddGoogleSearch(p);
@@ -151,19 +123,8 @@ var Gaze;
             };
             googleWindow.postMessage(JSON.stringify(request), location.origin);
             ////子②SearchFrame（こっちはスクレイピングしたオリジンが異なるものなので、黒魔法が必要）
-            //let searchWindow = this.SearchFrame.contentWindow;
-            //el = this.Doc.elementFromPoint(p.X, p.Y);
-            //if (el) {
-            //    // 要素にIDが降られていなければ
-            //    if (String.IsNullOrWhiteSpace(el.id)) {
-            //        // 一意な文字列を割り当てる
-            //        el.id = this.NewUid();
-            //    }
-            //    if (!this.Dic[el.id]) {
-            //        this.Dic[el.id] = 0;
-            //    }
-            //    this.Dic[el.id] += 1;
-            //}
+            let searchWindow = this.SearchFrame.contentWindow;
+            searchWindow.postMessage(JSON.stringify(request), "*");
         }
         /**
          * マシンパフォーマンスが低い場合は、一括でやるほうも検討する
@@ -184,28 +145,13 @@ var Gaze;
                 this._buffGooglePonter.push(p);
             }
         }
-        Increment(id) {
+        Increment(id, countaier) {
             if (!this.Dic[id]) {
-                this.Dic[id] = 0;
+                this.Dic[id] = { container: countaier, count: 0 };
             }
-            this.Dic[id] += 1;
-        }
-        // https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo
-        // https://stackoverflow.com/questions/1192228/scrolling-an-iframe-with-javascript
-        /*
-         *スクロールメソッドの定義
-         * sclolldown:下にスクロール
-         * sclollup:上にスクロール
-         * */
-        scrolldown() {
-            let frame = document.getElementById("_frameSearch");
-            var top = frame.contentWindow.scrollY;
-            frame.contentWindow.scrollTo(0, top + 100);
-        }
-        scrollup() {
-            let frame = document.getElementById("_frameSearch");
-            var top = frame.contentWindow.scrollY;
-            frame.contentWindow.scrollTo(0, top - 100);
+            let obj = this.Dic[id];
+            obj.count += 1;
+            this.Dic[id] = obj;
         }
     }
     Gaze.DotElementParser = DotElementParser;

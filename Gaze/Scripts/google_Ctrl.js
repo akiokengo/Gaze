@@ -36,8 +36,11 @@ var Gaze;
                             message: "RePosition-1",
                             id: el.id,
                         };
-                        // 送信先に変身する
-                        window.postMessage(JSON.stringify(response), e.origin);
+                        // 送信先に返信する
+                        let w = e.source;
+                        if (w) {
+                            w.postMessage(JSON.stringify(response), e.origin);
+                        }
                     }
                 }
             });

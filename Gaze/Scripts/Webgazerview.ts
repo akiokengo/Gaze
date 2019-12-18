@@ -140,6 +140,17 @@
 
         protected GenerateScript() {
             return `
+            function NewUid() {
+                let uuid = "", i, random;
+                for (i = 0; i < 32; i++) {
+                    random = Math.random() * 16 | 0;
+                    if (i == 8 || i == 12 || i == 16 || i == 20) {
+                        uuid += "-";
+                    }
+                    uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+                }
+                return uuid;
+            }
             window.addEventListener("message", e => {
                 if (!e.data) {
                     return;
@@ -170,16 +181,19 @@
                     let el = document.elementFromPoint(request.median.X, request.median.Y);
                     if (el) {
                         // 要素にIDが降られていなければ
-                        if (String.IsNullOrWhiteSpace(el.id)) {
+                        if (!el.id) {
                             // 一意な文字列を割り当てる
                             el.id = NewUid();
                         }
                         let response = {
-                            message: "RePosition-1",
+                            message: "RePosition-2",
                             id: el.id,
                         };
-                        // 送信先に変身する
-                        window.postMessage(JSON.stringify(response), e.origin);
+                        // 送信先に返信する
+                        let w = e.source;
+                        if (w) {
+                            w.postMessage(JSON.stringify(response), e.origin);
+                        }
                     }
                 }
 

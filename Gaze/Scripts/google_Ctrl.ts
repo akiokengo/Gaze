@@ -53,9 +53,11 @@
                             id: el.id,
                         };
 
-                        // 送信先に変身する
-                        window.postMessage(JSON.stringify(response), e.origin);
-
+                        // 送信先に返信する
+                        let w = e.source as Window;
+                        if (w) {
+                            w.postMessage(JSON.stringify(response), e.origin);
+                        }
                     }
                 }
             });
