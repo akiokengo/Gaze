@@ -4,7 +4,7 @@ var Gaze;
     class google_CtrlView {
         Bind() {
             this.ViewModel = new google_CtrlViewModel();
-            let btn1b = document.getElementById('searchButton');
+            let btn1b = document.getElementById('Searchbtn');
             if (btn1b) {
                 btn1b.onclick = e => this.ViewModel.searchAction();
             }
