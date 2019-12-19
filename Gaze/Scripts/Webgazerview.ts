@@ -8,6 +8,7 @@
         public Bind() {
             this.Viewmodel = new Webgazerviewmodel();
             let searchbtn = document.getElementById("Search");
+            let searchbtn2 = document.getElementById("Searchbtn")
             let learnbtn = document.getElementById("learn");
             let forwardButton = document.getElementById("ForwardButton");
             let backButton = document.getElementById("BackButton");
@@ -68,20 +69,17 @@
                     }
                 }, false);
 
-
-                if (strdel) {
-                    strdel.onclick = e => {
+                if (searchbtn2) {
+                    searchbtn2.onclick = e => {
                         let request = {
-                            message: "clear",
+                            message: "search",
                         };
                         let json = JSON.stringify(request);
-
-                        googleFrame.contentWindow.postMessage(json, "*");
-                        //let frame = document.getElementById("Strdelbtn");
-                        //let txtbox = document.getElementById("_frame");
-
+                        w.postMessage(json, location.origin);
                     }
+
                 }
+
 
             }
             if (forwardButton) {
