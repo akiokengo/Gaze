@@ -5,7 +5,7 @@
         public Bind() {
             this.ViewModel = new google_CtrlViewModel();
 
-            let btn1b = document.getElementById('Searchbtn');
+            let btn1b = document.getElementById('searchButton');
             if (btn1b) {
                 btn1b.onclick = e => this.ViewModel.searchAction();
             }

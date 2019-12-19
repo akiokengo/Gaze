@@ -12,8 +12,7 @@
             let forwardButton = document.getElementById("ForwardButton");
             let backButton = document.getElementById("BackButton");
             let resumeButton = document.getElementById("ResumeButton") as HTMLInputElement;
-            let scrollupbtn = document.getElementById("Scrollup");
-            let scrolldownbtn = document.getElementById("Scrolldown");
+            let strdel = document.getElementById("Strdelbtn");
 
             if (searchbtn) {
                 searchbtn.onclick = e => {
@@ -45,19 +44,8 @@
                 }
             }
 
-            if (scrolldownbtn) {
-                scrolldownbtn.onclick = e => {
-                    let frame = document.getElementById("_frameSearch");
-                    frame.scrollBy(0, 100);
-                }
-            }
 
-            if (scrollupbtn) {
-                scrolldownbtn.onclick = e => {
-                    let frame = document.getElementById("_frameSearch");
-                    frame.scrollBy(0, -100);
-                }
-            }
+
 
 
             let searchFrame = document.getElementById("_frameSearch") as HTMLIFrameElement;
@@ -79,6 +67,22 @@
                         this.Viewmodel.feeling(word);
                     }
                 }, false);
+
+
+                if (strdel) {
+                    strdel.onclick = e => {
+                        let request = {
+                            message: "clear",
+                        };
+                        let json = JSON.stringify(request);
+
+                        googleFrame.contentWindow.postMessage(json, "*");
+                        //let frame = document.getElementById("Strdelbtn");
+                        //let txtbox = document.getElementById("_frame");
+
+                    }
+                }
+
             }
             if (forwardButton) {
                 forwardButton.onclick = e => {
