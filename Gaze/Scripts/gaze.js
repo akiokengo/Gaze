@@ -11707,20 +11707,33 @@ var Gaze;
                 let key = tuples[i][0];
                 let pair = this.Dic[key];
                 // 指定した閾値を超える場合
-                if (this.Threshold < pair.count) {
+                let idex = this.Threshold;
+                if (pair.container == "root") {
+                    idex = this.Threshold;
+                }
+                if (pair.container == "GoogleFrame") {
+                    idex = this.Threshold / 2;
+                }
+                if (pair.container == "SearchFrame") {
+                    idex = this.Threshold * 2;
+                }
+                if (idex < pair.count) {
+                    let element = document.getElementById(key);
                     //let element = this.Doc.getElementById(key);
                     //if (!element) {
                     //    element = document.getElementById(key);
                     //}
-                    //if (this.IsInputElement(element)) {
-                    //    let input = element as HTMLInputElement;
-                    //    if (input.type == "button") {
-                    //        input.onclick(null);
-                    //    }
-                    //} else if (this.IsButtonElement(element)) {
-                    //    let button = element as HTMLButtonElement;
-                    //    button.onclick(null);
-                    //}
+                    console.info(`☆${key}`);
+                    if (this.IsInputElement(element)) {
+                        let input = element;
+                        if (input.type == "button") {
+                            input.onclick(null);
+                        }
+                    }
+                    else if (this.IsButtonElement(element)) {
+                        let button = element;
+                        button.onclick(null);
+                    }
                 }
             }
             this.Dic = {};
@@ -11786,7 +11799,13 @@ var Gaze;
                 this.Dic[id] = { container: countaier, count: 0 };
             }
             let obj = this.Dic[id];
-            obj.count += 1;
+            if (id == "BackButton") {
+                obj.count += 0.5;
+            }
+            else {
+                obj.count += 1;
+            }
+            console.info(`□${id}`);
             this.Dic[id] = obj;
         }
     }
@@ -22256,7 +22275,7 @@ function store_points(x, y, k) {
     webgazer.params.videoElementCanvasId = 'webgazerVideoCanvas';
     webgazer.params.faceOverlayId = 'webgazerFaceOverlay';
     webgazer.params.faceFeedbackBoxId = 'webgazerFaceFeedbackBox';
-    webgazer.params.gazeDotId = 'webgazerGazeDot'
+    webgazer.params.gazeDotId = 'webgazerGazeDot';
 
     webgazer.params.videoViewerWidth = 320;
     webgazer.params.videoViewerHeight = 240;
@@ -22525,7 +22544,7 @@ function store_points(x, y, k) {
 
 
     var pMedian = new Gaze.Median(1 /* 中央値をとるためのサンプル数 */);
-    var dotParser = new Gaze.DotElementParser(5 * 1000 /* msec */, 30 /* 回で検知 */);
+    var dotParser = new Gaze.DotElementParser(5 * 1000 /* msec */, 5 /* 回で検知 */);
     function loop() {
 
         if (!paused) {
@@ -22810,8 +22829,8 @@ function store_points(x, y, k) {
         gazeDot.style.background = 'red';
         gazeDot.style.borderRadius = '100%';
         gazeDot.style.opacity = '0.7';
-        gazeDot.style.width = '10px';
-        gazeDot.style.height = '10px';
+        gazeDot.style.width = '5px';
+        gazeDot.style.height = '5px';
 
 
         // Add other preview/feedback elements to the screen once the video has shown and its parameters are initialized

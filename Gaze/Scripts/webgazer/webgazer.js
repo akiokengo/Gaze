@@ -10461,7 +10461,7 @@ function store_points(x, y, k) {
     webgazer.params.videoElementCanvasId = 'webgazerVideoCanvas';
     webgazer.params.faceOverlayId = 'webgazerFaceOverlay';
     webgazer.params.faceFeedbackBoxId = 'webgazerFaceFeedbackBox';
-    webgazer.params.gazeDotId = 'webgazerGazeDot'
+    webgazer.params.gazeDotId = 'webgazerGazeDot';
 
     webgazer.params.videoViewerWidth = 320;
     webgazer.params.videoViewerHeight = 240;
@@ -10730,7 +10730,7 @@ function store_points(x, y, k) {
 
 
     var pMedian = new Gaze.Median(1 /* 中央値をとるためのサンプル数 */);
-    var dotParser = new Gaze.DotElementParser(5 * 1000 /* msec */, 30 /* 回で検知 */);
+    var dotParser = new Gaze.DotElementParser(5 * 1000 /* msec */, 5 /* 回で検知 */);
     function loop() {
 
         if (!paused) {
@@ -11015,8 +11015,8 @@ function store_points(x, y, k) {
         gazeDot.style.background = 'red';
         gazeDot.style.borderRadius = '100%';
         gazeDot.style.opacity = '0.7';
-        gazeDot.style.width = '10px';
-        gazeDot.style.height = '10px';
+        gazeDot.style.width = '5px';
+        gazeDot.style.height = '5px';
 
 
         // Add other preview/feedback elements to the screen once the video has shown and its parameters are initialized

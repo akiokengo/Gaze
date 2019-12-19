@@ -71,20 +71,33 @@ var Gaze;
                 let key = tuples[i][0];
                 let pair = this.Dic[key];
                 // 指定した閾値を超える場合
-                if (this.Threshold < pair.count) {
+                let idex = this.Threshold;
+                if (pair.container == "root") {
+                    idex = this.Threshold;
+                }
+                if (pair.container == "GoogleFrame") {
+                    idex = this.Threshold / 2;
+                }
+                if (pair.container == "SearchFrame") {
+                    idex = this.Threshold * 2;
+                }
+                if (idex < pair.count) {
+                    let element = document.getElementById(key);
                     //let element = this.Doc.getElementById(key);
                     //if (!element) {
                     //    element = document.getElementById(key);
                     //}
-                    //if (this.IsInputElement(element)) {
-                    //    let input = element as HTMLInputElement;
-                    //    if (input.type == "button") {
-                    //        input.onclick(null);
-                    //    }
-                    //} else if (this.IsButtonElement(element)) {
-                    //    let button = element as HTMLButtonElement;
-                    //    button.onclick(null);
-                    //}
+                    console.info(`☆${key}`);
+                    if (this.IsInputElement(element)) {
+                        let input = element;
+                        if (input.type == "button") {
+                            input.onclick(null);
+                        }
+                    }
+                    else if (this.IsButtonElement(element)) {
+                        let button = element;
+                        button.onclick(null);
+                    }
                 }
             }
             this.Dic = {};
@@ -150,7 +163,13 @@ var Gaze;
                 this.Dic[id] = { container: countaier, count: 0 };
             }
             let obj = this.Dic[id];
-            obj.count += 1;
+            if (id == "BackButton") {
+                obj.count += 0.5;
+            }
+            else {
+                obj.count += 1;
+            }
+            console.info(`□${id}`);
             this.Dic[id] = obj;
         }
     }

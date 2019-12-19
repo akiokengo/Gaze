@@ -18,25 +18,27 @@
         <!-- webgazerのメイン画面  -->
         <div class="row">
             <!-- col-xx-NN の指定で列を分割する。col-sm-2 で 12分割中、2分割 -->
-            <div class="col-sm-2 m-top100">
-                <input type="button" a href="#" class="row btn std-btn" id="Searchbtn" value="検索" />
-                <input type="button" a href="#" class="row btn std-btn" id="BackButton" value="前のページ" />
-                <input type="button" a href="#" class="row btn std-btn" id="Search" value="再検索" />
-   
+            <div class="col-sm-2 m-top100" style="height:100vh">
+                <input type="button" a href="#" class="row btn std-btn " id="Searchbtn" value="検索" />
+                
+                <input type="button" a href="#" class="row btn std-btn" id="Search" value="再検索" style="margin-top:20vh"/>
+
 
             </div>
-            <div class="col-sm-2 m-top100">
-                <input type="button" a href="#" class="row btn std-btn" id="Strdelbtn" value="クリア" />
-                <input type="button" a href="#" class="row btn std-btn" id="ForwardButton" value="次のページ" />
-                <input type="button" a href="#" class="row btn std-btn" id="learn" value="再学習" />
-
-            </div>
-
-            <!-- col-xx-NN の指定で列を分割する。col-sm-2 で 12分割中、2分割 -->
             <div class="col-sm-8 iframe-container" id="iframe-container">
                 <iframe id="_frame" src="Google.html" frameborder="0"></iframe>
                 <iframe id="_frameSearch" frameborder="0"></iframe>
             </div>
+            <div class="col-sm-2 ">
+                <input type="button" a href="#" class="row btn std-btn m-10" id="BackButton" value="前のページ" />
+                <input type="button" a href="#" class="row btn std-btn m-10"  id="Strdelbtn" value="クリア" />
+                <input type="button" a href="#" class="row btn std-btn m-10" id="ForwardButton" value="次のページ" />
+                <input type="button" a href="#" class="row btn std-btn m-10" id="learn" value="再学習" />
+
+            </div>
+
+            <!-- col-xx-NN の指定で列を分割する。col-sm-2 で 12分割中、2分割 -->
+
         </div>
     </div>
     <script src="Scripts/gaze.js"></script>
