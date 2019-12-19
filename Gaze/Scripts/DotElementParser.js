@@ -60,7 +60,7 @@ var Gaze;
         Parse() {
             let tuples = new Array();
             for (var key in this.Dic)
-                tuples.push([key, this.Dic[key]]);
+                tuples.push([key, this.Dic[key].count]);
             tuples.sort(function (a, b) {
                 a = a[1];
                 b = b[1];
@@ -69,9 +69,9 @@ var Gaze;
             tuples = tuples.reverse();
             for (var i = 0; i < tuples.length; i++) {
                 let key = tuples[i][0];
-                let value = tuples[i][1];
+                let pair = this.Dic[key];
                 // 指定した閾値を超える場合
-                if (this.Threshold < value) {
+                if (this.Threshold < pair.count) {
                     //let element = this.Doc.getElementById(key);
                     //if (!element) {
                     //    element = document.getElementById(key);

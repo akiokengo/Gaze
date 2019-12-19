@@ -49,7 +49,7 @@
                 }
             });
 
-          
+
             // 指定時間経過後に、判定
             setInterval(() => {
                 this.Parse();
@@ -83,7 +83,7 @@
         protected Parse() {
             let tuples = new Array<{}>();
             for (var key in this.Dic)
-                tuples.push([key, this.Dic[key]]);
+                tuples.push([key, this.Dic[key].count]);
 
             tuples.sort(function (a, b) {
                 a = a[1];
@@ -95,10 +95,12 @@
 
             for (var i = 0; i < tuples.length; i++) {
                 let key: string = tuples[i][0];
-                let value: number = tuples[i][1];
-
+                let pair = this.Dic[key];
                 // 指定した閾値を超える場合
-                if (this.Threshold < value) {
+                if (this.Threshold < pair.count) {
+
+
+
                     //let element = this.Doc.getElementById(key);
                     //if (!element) {
                     //    element = document.getElementById(key);
