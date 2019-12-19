@@ -80,6 +80,19 @@
 
                 }
 
+                if (strdel) {
+                    strdel.onclick = e => {
+                        let request = {
+                            message: "clear",
+
+                        };
+                        let json = JSON.stringify(request);
+                        w.postMessage(json, location.origin);
+
+                    }
+
+                }
+
 
             }
             if (forwardButton) {
