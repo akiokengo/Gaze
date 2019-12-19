@@ -4,6 +4,7 @@ var Gaze;
         Bind() {
             this.Viewmodel = new Webgazerviewmodel();
             let searchbtn = document.getElementById("Search");
+            let searchbtn2 = document.getElementById("Searchbtn");
             let learnbtn = document.getElementById("learn");
             let forwardButton = document.getElementById("ForwardButton");
             let backButton = document.getElementById("BackButton");
@@ -64,6 +65,15 @@ var Gaze;
                         this.Viewmodel.feeling(word);
                     }
                 }, false);
+                if (searchbtn2) {
+                    searchbtn2.onclick = e => {
+                        let request = {
+                            message: "search",
+                        };
+                        let json = JSON.stringify(request);
+                        w.postMessage(json, location.origin);
+                    };
+                }
             }
             if (forwardButton) {
                 forwardButton.onclick = e => {
