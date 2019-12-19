@@ -59,6 +59,12 @@
                             w.postMessage(JSON.stringify(response), e.origin);
                         }
                     }
+                } else if (request.message == "clear") {
+
+                    input.value = "";
+                } else if (request.message == "search") {
+
+                    this.ViewModel.searchAction();
                 }
             });
         }
