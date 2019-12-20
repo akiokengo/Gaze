@@ -110,23 +110,34 @@
                 }
                 if (idex < pair.count) {
 
-                    let element = document.getElementById(key);
+                    if (pair.container === "root") {
+                        let element = document.getElementById(key);
 
-                    //let element = this.Doc.getElementById(key);
-                    //if (!element) {
-                    //    element = document.getElementById(key);
-                    //}
+                        //let element = this.Doc.getElementById(key);
+                        //if (!element) {
+                        //    element = document.getElementById(key);
+                        //}
 
-                    console.info(`☆${key}`);
+                        console.info(`☆${key}`);
 
-                    if (this.IsInputElement(element)) {
-                        let input = element as HTMLInputElement;
-                        if (input.type == "button") {
-                            input.onclick(null);
+                        if (this.IsInputElement(element)) {
+                            let input = element as HTMLInputElement;
+                            if (input.type == "button") {
+                                input.onclick(null);
+                            }
+                        } else if (this.IsButtonElement(element)) {
+                            let button = element as HTMLButtonElement;
+                            button.onclick(null);
                         }
-                    } else if (this.IsButtonElement(element)) {
-                        let button = element as HTMLButtonElement;
-                        button.onclick(null);
+                    } else if (pair.container === "SearchFrame") {
+                        let w = this.SearchFrame.contentWindow;
+                        let request = {
+                            message: "click",
+                            id: key,
+
+                        }
+                        let json = JSON.stringify(request);
+                        w.postMessage(json, "*");
                     }
                 }
             }
