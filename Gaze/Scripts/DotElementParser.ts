@@ -133,13 +133,12 @@
                     let request = {
                         message: "click",
                         id: key,
-
                     };
                     let json = JSON.stringify(request);
                     w.postMessage(json, "*");
                 }
             }
-        
+
 
             this.Dic = {};
 }
