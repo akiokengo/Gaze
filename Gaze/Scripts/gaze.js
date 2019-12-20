@@ -23642,7 +23642,10 @@ $(document).ready(function () {
                             if (isConfirm) {
                                 //clear the calibration & hide the last middle button
                                 webgazer.saveAsync().always(() => {
-                                    location.href = 'webgazer.html';
+                                    sleep(5000).then(() => {
+                                        location.href = 'webgazer.html';
+                                    });
+                                   
                                 });
                             } else {
                                 //use restart function to restart the calibration
