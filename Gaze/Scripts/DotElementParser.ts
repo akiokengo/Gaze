@@ -220,6 +220,11 @@
             if (id == "BackButton") {
                 obj.count += 0.5;
             }
+            else if (id == "learn") {
+                obj.count = 0;
+
+            }
+
             else {
                 obj.count += 1;
             }

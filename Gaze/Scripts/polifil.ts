@@ -32,11 +32,11 @@ function clearIndexDBAsync() {
     let dfd = $.Deferred();
     let helper = new Gaze.IndexedDBHelper<Gaze.lzString>(Gaze.lzString, "db");
 
-    dfd.resolve();
-    //helper.Truncate().always(() => {
+    
+    helper.Truncate().always(() => {
 
-    //    dfd.resolve();
-    //});
+        dfd.resolve();
+    });
 
     return dfd.promise();
 }
