@@ -94,6 +94,7 @@
     <Content Include="bundleconfig.json" />
     <Content Include="Global.asax" />
     <Content Include="Google.html" />
+    <Content Include="IndexedDBHelper.js" />
     <Content Include="package.json" />
     <Content Include="play.html" />
     <Content Include="Scripts\DotElementParser.js" />
