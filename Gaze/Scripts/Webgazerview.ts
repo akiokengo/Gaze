@@ -186,7 +186,7 @@
                     // ディスプレイの↓ばかりみてた場合
                     if ((clientHeight - 300) < request.scrollMedian.Y) {
                         scrollingElement.scrollTop += 100;
-                    }
+                    
                     else if (request.scrollMedian.Y < 200) {
                         // ↑ばかりみてた場合
                         scrollingElement.scrollTop -= 100;

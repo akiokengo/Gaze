@@ -26,10 +26,9 @@ function LoadAsync() {
 function clearIndexDBAsync() {
     let dfd = $.Deferred();
     let helper = new Gaze.IndexedDBHelper(Gaze.lzString, "db");
-    dfd.resolve();
-    //helper.Truncate().always(() => {
-    //    dfd.resolve();
-    //});
+    helper.Truncate().always(() => {
+        dfd.resolve();
+    });
     return dfd.promise();
 }
 // http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
