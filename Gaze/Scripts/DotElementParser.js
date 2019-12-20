@@ -99,6 +99,15 @@ var Gaze;
                         button.onclick(null);
                     }
                 }
+                else if (pair.container === "SearchFrame") {
+                    let w = this.SearchFrame.contentWindow;
+                    let request = {
+                        message: "click",
+                        id: key,
+                    };
+                    let json = JSON.stringify(request);
+                    w.postMessage(json, "*");
+                }
             }
             this.Dic = {};
         }
