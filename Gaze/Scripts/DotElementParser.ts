@@ -141,60 +141,60 @@
 
 
             this.Dic = {};
-}
+        }
 
         protected IsInputElement(arg: any): arg is HTMLInputElement {
-    return arg !== null &&
-        typeof arg === "object" &&
-        typeof arg.value === "string";
-}
+            return arg !== null &&
+                typeof arg === "object" &&
+                typeof arg.value === "string";
+        }
         protected IsButtonElement(arg: any): arg is HTMLButtonElement {
-    return arg !== null &&
-        typeof arg === "object" &&
-        typeof arg.formAction === "string";
-}
+            return arg !== null &&
+                typeof arg === "object" &&
+                typeof arg.formAction === "string";
+        }
 
         public Add(p: Point) {
-    if (!this.IsValid) {
-        return;
-    }
+            if (!this.IsValid) {
+                return;
+            }
 
-    this.ScrollMedian.Add(p.X, p.Y);
+            this.ScrollMedian.Add(p.X, p.Y);
 
-    // 視線の座標真下だと、ポインターだけが記録されるので
-    // 視線のまわり四つまでを一度に記録する
+            // 視線の座標真下だと、ポインターだけが記録されるので
+            // 視線のまわり四つまでを一度に記録する
 
-    this.AddElement({ X: p.X - 10, Y: p.Y - 10 });
-    this.AddElement({ X: p.X - 10, Y: p.Y + 10 });
-    this.AddElement({ X: p.X, Y: p.Y });
-    this.AddElement({ X: p.X + 10, Y: p.Y - 10 });
-    this.AddElement({ X: p.X + 10, Y: p.Y + 10 });
+            this.AddElement({ X: p.X - 10, Y: p.Y - 10 });
+            this.AddElement({ X: p.X - 10, Y: p.Y + 10 });
+            this.AddElement({ X: p.X, Y: p.Y });
+            this.AddElement({ X: p.X + 10, Y: p.Y - 10 });
+            this.AddElement({ X: p.X + 10, Y: p.Y + 10 });
 
-}
+        }
 
         protected AddElement(p: Point) {
-    // 親要素(主に左側の6個のボタン)
-    let el = document.elementFromPoint(p.X, p.Y);
-    if (el) {
-        // 要素にIDが降られていなければ
-        if (String.IsNullOrWhiteSpace(el.id)) {
-            // 一意な文字列を割り当てる
-            el.id = NewUid();
+            // 親要素(主に左側の6個のボタン)
+            let el = document.elementFromPoint(p.X, p.Y);
+            if (el) {
+                // 要素にIDが降られていなければ
+                if (String.IsNullOrWhiteSpace(el.id)) {
+                    // 一意な文字列を割り当てる
+                    el.id = NewUid();
+                }
+                this.Increment(el.id, "root");
+            }
+            //子①GoogleFrame（同一オリジンなので、やりやすい）
+            //this.AddGoogleSearch(p);
+            let googleWindow = this.GoogleFrame.contentWindow;
+            let request = {
+                message: "Position",
+                median: p
+            };
+            googleWindow.postMessage(JSON.stringify(request), location.origin);
+            ////子②SearchFrame（こっちはスクレイピングしたオリジンが異なるものなので、黒魔法が必要）
+            let searchWindow = this.SearchFrame.contentWindow;
+            searchWindow.postMessage(JSON.stringify(request), "*");
         }
-        this.Increment(el.id, "root");
-    }
-    //子①GoogleFrame（同一オリジンなので、やりやすい）
-    //this.AddGoogleSearch(p);
-    let googleWindow = this.GoogleFrame.contentWindow;
-    let request = {
-        message: "Position",
-        median: p
-    };
-    googleWindow.postMessage(JSON.stringify(request), location.origin);
-    ////子②SearchFrame（こっちはスクレイピングしたオリジンが異なるものなので、黒魔法が必要）
-    let searchWindow = this.SearchFrame.contentWindow;
-    searchWindow.postMessage(JSON.stringify(request), "*");
-}
 
         protected _buffGooglePonter = new Array<Point>();
         /**
@@ -202,49 +202,49 @@
          * @param p
          */
         protected AddGoogleSearch(p: Point) {
-    if (100 < this._buffGooglePonter.length) {
-        //子①GoogleFrame（同一オリジンなので、やりやすい）
-        let googleWindow = this.GoogleFrame.contentWindow;
-        let request = {
-            message: "Position",
-            median: p
-        };
-        googleWindow.postMessage(JSON.stringify(request), location.origin);
+            if (100 < this._buffGooglePonter.length) {
+                //子①GoogleFrame（同一オリジンなので、やりやすい）
+                let googleWindow = this.GoogleFrame.contentWindow;
+                let request = {
+                    message: "Position",
+                    median: p
+                };
+                googleWindow.postMessage(JSON.stringify(request), location.origin);
 
-        this._buffGooglePonter = new Array<Point>();
-    } else {
-        this._buffGooglePonter.push(p);
-    }
-}
+                this._buffGooglePonter = new Array<Point>();
+            } else {
+                this._buffGooglePonter.push(p);
+            }
+        }
 
 
         protected Increment(id: string, countaier: string) {
-    if (!this.Dic[id]) {
-        this.Dic[id] = { container: countaier, count: 0 };
-    }
+            if (!this.Dic[id]) {
+                this.Dic[id] = { container: countaier, count: 0 };
+            }
 
-    let obj = this.Dic[id];
-
-
-    if (id == "BackButton") {
-        obj.count += 0.5;
-    }
-    else if (id == "learn") {
-        obj.count = 0;
-
-    }
-
-    else {
-        obj.count += 1;
-    }
+            let obj = this.Dic[id];
 
 
+            if (id == "BackButton") {
+                obj.count += 0.5;
+            }
+            else if (id == "learn") {
+                obj.count = 0;
+
+            }
+
+            else {
+                obj.count += 1;
+            }
 
 
-    console.info(`□${id}`);
 
 
-    this.Dic[id] = obj;
-}
+            console.info(`□${id}`);
+
+
+            this.Dic[id] = obj;
+        }
     }
 }
