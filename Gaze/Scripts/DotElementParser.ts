@@ -110,8 +110,7 @@
                 }
                 if (idex < pair.count) {
 
-                    if (pair.container === "root") {
-                        let element = document.getElementById(key);
+                    let element = document.getElementById(key);
 
                         //let element = this.Doc.getElementById(key);
                         //if (!element) {
