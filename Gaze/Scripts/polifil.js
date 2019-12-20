@@ -45,4 +45,33 @@ function NewUid() {
     }
     return uuid;
 }
+function GetUserMedia(max, constraints) {
+    let dfd = $.Deferred();
+    GetUserMediaRecusive(constraints)
+        .done(x => {
+        dfd.resolve(x);
+    }).fail((x) => {
+        if (x == 0) {
+            dfd.reject("読み込めませんでした");
+        }
+        else {
+            GetUserMedia(x - 1, constraints)
+                .done(y => {
+                dfd.resolve(y);
+            }).fail(y => {
+                dfd.reject("読み込めませんでした");
+            });
+        }
+    });
+    return dfd.promise();
+}
+function GetUserMediaRecusive(constraints) {
+    let dfd = $.Deferred();
+    navigator.mediaDevices.getUserMedia(constraints).then(x => {
+        dfd.resolve(x);
+    }).catch(x => {
+        dfd.reject(x);
+    });
+    return dfd.promise();
+}
 //# sourceMappingURL=polifil.js.map

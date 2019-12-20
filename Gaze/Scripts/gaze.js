@@ -11753,6 +11753,15 @@ var Gaze;
                 return;
             }
             this.ScrollMedian.Add(p.X, p.Y);
+            // 視線の座標真下だと、ポインターだけが記録されるので
+            // 視線のまわり四つまでを一度に記録する
+            this.AddElement({ X: p.X - 10, Y: p.Y - 10 });
+            this.AddElement({ X: p.X - 10, Y: p.Y + 10 });
+            this.AddElement({ X: p.X, Y: p.Y });
+            this.AddElement({ X: p.X + 10, Y: p.Y - 10 });
+            this.AddElement({ X: p.X + 10, Y: p.Y + 10 });
+        }
+        AddElement(p) {
             // 親要素(主に左側の6個のボタン)
             let el = document.elementFromPoint(p.X, p.Y);
             if (el) {
@@ -22829,8 +22838,8 @@ function store_points(x, y, k) {
         gazeDot.style.background = 'red';
         gazeDot.style.borderRadius = '100%';
         gazeDot.style.opacity = '0.7';
-        gazeDot.style.width = '5px';
-        gazeDot.style.height = '5px';
+        gazeDot.style.width = '10px';
+        gazeDot.style.height = '10px';
 
 
         // Add other preview/feedback elements to the screen once the video has shown and its parameters are initialized
@@ -22956,7 +22965,7 @@ function store_points(x, y, k) {
 
                 // Request webcam access under specific constraints
                 // WAIT for access            
-                navigator.mediaDevices.getUserMedia(webgazer.params.camConstraints)
+                GetUserMedia(5, webgazer.params.camConstraints)
                     .then(function (stream) { // set the stream
                         videoStream = stream;
                         init(videoStream);
@@ -22969,11 +22978,25 @@ function store_points(x, y, k) {
                         videoStream = null;
                         dfd.resolve(webgazer);
                     });
+
+                //navigator.mediaDevices.getUserMedia(webgazer.params.camConstraints)
+                //    .then(function (stream) { // set the stream
+                //        videoStream = stream;
+                //        init(videoStream);
+                //        dfd.resolve(webgazer);
+                //    })
+                //    .catch(function (err) { // error handling
+                //        onFail();
+                //        console.log(err);
+                //        videoElement = null;
+                //        videoStream = null;
+                //        dfd.resolve(webgazer);
+                //    });
                 return dfd.promise();
             });
-
         return dfd.promise();
     };
+
 
     /**
      * Checks if webgazer has finished initializing after calling begin()

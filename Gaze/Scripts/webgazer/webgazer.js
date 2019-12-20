@@ -11015,8 +11015,8 @@ function store_points(x, y, k) {
         gazeDot.style.background = 'red';
         gazeDot.style.borderRadius = '100%';
         gazeDot.style.opacity = '0.7';
-        gazeDot.style.width = '5px';
-        gazeDot.style.height = '5px';
+        gazeDot.style.width = '10px';
+        gazeDot.style.height = '10px';
 
 
         // Add other preview/feedback elements to the screen once the video has shown and its parameters are initialized
@@ -11142,7 +11142,7 @@ function store_points(x, y, k) {
 
                 // Request webcam access under specific constraints
                 // WAIT for access            
-                navigator.mediaDevices.getUserMedia(webgazer.params.camConstraints)
+                GetUserMedia(5, webgazer.params.camConstraints)
                     .then(function (stream) { // set the stream
                         videoStream = stream;
                         init(videoStream);
@@ -11155,11 +11155,25 @@ function store_points(x, y, k) {
                         videoStream = null;
                         dfd.resolve(webgazer);
                     });
+
+                //navigator.mediaDevices.getUserMedia(webgazer.params.camConstraints)
+                //    .then(function (stream) { // set the stream
+                //        videoStream = stream;
+                //        init(videoStream);
+                //        dfd.resolve(webgazer);
+                //    })
+                //    .catch(function (err) { // error handling
+                //        onFail();
+                //        console.log(err);
+                //        videoElement = null;
+                //        videoStream = null;
+                //        dfd.resolve(webgazer);
+                //    });
                 return dfd.promise();
             });
-
         return dfd.promise();
     };
+
 
     /**
      * Checks if webgazer has finished initializing after calling begin()

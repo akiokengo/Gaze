@@ -152,6 +152,18 @@
 
             this.ScrollMedian.Add(p.X, p.Y);
 
+            // 視線の座標真下だと、ポインターだけが記録されるので
+            // 視線のまわり四つまでを一度に記録する
+
+            this.AddElement({ X: p.X - 10, Y: p.Y - 10 });
+            this.AddElement({ X: p.X - 10, Y: p.Y + 10 });
+            this.AddElement({ X: p.X, Y: p.Y });
+            this.AddElement({ X: p.X + 10, Y: p.Y - 10 });
+            this.AddElement({ X: p.X + 10, Y: p.Y + 10 });
+
+        }
+
+        protected AddElement(p: Point) {
             // 親要素(主に左側の6個のボタン)
             let el = document.elementFromPoint(p.X, p.Y);
             if (el) {
@@ -162,7 +174,6 @@
                 }
                 this.Increment(el.id, "root");
             }
-
             //子①GoogleFrame（同一オリジンなので、やりやすい）
             //this.AddGoogleSearch(p);
             let googleWindow = this.GoogleFrame.contentWindow;
@@ -171,15 +182,12 @@
                 median: p
             };
             googleWindow.postMessage(JSON.stringify(request), location.origin);
-
             ////子②SearchFrame（こっちはスクレイピングしたオリジンが異なるものなので、黒魔法が必要）
             let searchWindow = this.SearchFrame.contentWindow;
             searchWindow.postMessage(JSON.stringify(request), "*");
         }
 
-
         protected _buffGooglePonter = new Array<Point>();
-
         /**
          * マシンパフォーマンスが低い場合は、一括でやるほうも検討する
          * @param p
@@ -216,7 +224,7 @@
                 obj.count += 1;
             }
 
-            
+
 
 
             console.info(`□${id}`);

@@ -117,6 +117,15 @@ var Gaze;
                 return;
             }
             this.ScrollMedian.Add(p.X, p.Y);
+            // 視線の座標真下だと、ポインターだけが記録されるので
+            // 視線のまわり四つまでを一度に記録する
+            this.AddElement({ X: p.X - 10, Y: p.Y - 10 });
+            this.AddElement({ X: p.X - 10, Y: p.Y + 10 });
+            this.AddElement({ X: p.X, Y: p.Y });
+            this.AddElement({ X: p.X + 10, Y: p.Y - 10 });
+            this.AddElement({ X: p.X + 10, Y: p.Y + 10 });
+        }
+        AddElement(p) {
             // 親要素(主に左側の6個のボタン)
             let el = document.elementFromPoint(p.X, p.Y);
             if (el) {
