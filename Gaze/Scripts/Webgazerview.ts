@@ -22,7 +22,7 @@
             }
             if (learnbtn) {
                 learnbtn.onclick = e => {
-                     location.href = "index.html?b=true";
+                    location.href = "index.html?b=true";
 
 
                 }
@@ -165,6 +165,21 @@
                     uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
                 }
                 return uuid;
+            };
+            function IsInputElement(arg) {
+                return arg !== null &&
+                typeof arg === "object" &&
+                typeof arg.value === "string";
+            };
+            function IsButtonElement(arg) {
+                return arg !== null &&
+                typeof arg === "object" &&
+                typeof arg.formAction === "string";
+            };
+            function IsDivElement(arg) {
+                return arg !== null &&
+                typeof arg === "object" &&
+                arg.nodeName === "DIV";
             }
             window.addEventListener("message", e => {
                 if (!e.data) {
@@ -186,33 +201,52 @@
                     // ディスプレイの↓ばかりみてた場合
                     if ((clientHeight - 300) < request.scrollMedian.Y) {
                         scrollingElement.scrollTop += 100;
-                    
+                    }
                     else if (request.scrollMedian.Y < 200) {
-                        // ↑ばかりみてた場合
-                        scrollingElement.scrollTop -= 100;
-                    }
-                }
-                if (request.message == "Position") {
-                    let el = document.elementFromPoint(request.median.X, request.median.Y);
-                    if (el) {
-                        // 要素にIDが降られていなければ
-                        if (!el.id) {
-                            // 一意な文字列を割り当てる
-                            el.id = NewUid();
-                        }
-                        let response = {
-                            message: "RePosition-2",
-                            id: el.id,
-                        };
-                        // 送信先に返信する
-                        let w = e.source;
-                        if (w) {
-                            w.postMessage(JSON.stringify(response), e.origin);
+                            // ↑ばかりみてた場合
+                            scrollingElement.scrollTop -= 100;
                         }
                     }
-                }
-
-            });
+                    if (request.message == "Position") {
+                        let el = document.elementFromPoint(request.median.X, request.median.Y);
+                        if (el) {
+                            // 要素にIDが降られていなければ
+                            if (!el.id) {
+                                // 一意な文字列を割り当てる
+                                el.id = NewUid();
+                            }
+                            let response = {
+                                message: "RePosition-2",
+                                id: el.id,
+                            };
+                            // 送信先に返信する
+                            let w = e.source;
+                            if (w) {
+                                w.postMessage(JSON.stringify(response), e.origin);
+                            }
+                        }
+                    }
+                    if (request.message == "click") {
+                        let el = document.getElementById(request.id);
+                        if (IsInputElement(el)) {
+                            let input = el;
+                            if (input.type == "button") {
+                                input.onclick(null);
+                            }
+                        }
+                        else if (IsButtonElement(el)) {
+                            let button = el;
+                            button.onclick(null);
+                        } 
+                        else if (IsDivElement(el)) {
+                            let div = el;
+                            let a = div.querySelector(" a")
+                            if(a){
+                                a.click();
+                           }
+                        }
+                    }
+                });
 `;
         }
 

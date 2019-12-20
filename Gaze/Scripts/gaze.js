@@ -11746,6 +11746,67 @@ var Gaze;
                 }
             }
             this.Dic = {};
+            /**/
+            //window.addEventListener("message", e => {
+            //    if (!e.data) {
+            //        return;
+            //    }
+            //    let request = JSON.parse(e.data);
+            //    if (!request) {
+            //        return;
+            //    }
+            //    if (request.message == "ParseScroll") {
+            //        let scrollingElement = document.scrollingElement;
+            //        let clientHeight = scrollingElement.clientHeight;
+            //        let clientWidth = scrollingElement.clientWidth;
+            //        if (clientHeight == 0 || clientWidth == 0) {
+            //            return;
+            //        }
+            //        let h = scrollingElement.scrollHeight;
+            //        let w = scrollingElement.scrollWidth;
+            //        // ディスプレイの↓ばかりみてた場合
+            //        if ((clientHeight - 300) < request.scrollMedian.Y) {
+            //            scrollingElement.scrollTop += 100;
+            //        }
+            //        else if (request.scrollMedian.Y < 200) {
+            //                // ↑ばかりみてた場合
+            //                scrollingElement.scrollTop -= 100;
+            //            }
+            //        }
+            //        if (request.message == "Position") {
+            //            let el = document.elementFromPoint(request.median.X, request.median.Y);
+            //            if (el) {
+            //                // 要素にIDが降られていなければ
+            //                if (!el.id) {
+            //                    // 一意な文字列を割り当てる
+            //                    el.id = NewUid();
+            //                }
+            //                let response = {
+            //                    message: "RePosition-2",
+            //                    id: el.id,
+            //                };
+            //                // 送信先に返信する
+            //                let w = e.source;
+            //                if (w) {
+            //                    w.postMessage(JSON.stringify(response), e.origin);
+            //                }
+            //            }
+            //        }
+            //        if (request.message == "click") {
+            //            let el = document.getElementById(request.id);
+            //            if (IsInputElement(el)) {
+            //                let input = el;
+            //                if (input.type == "button") {
+            //                    input.onclick(null);
+            //                }
+            //            }
+            //            else if (IsButtonElement(el)) {
+            //                let button = el;
+            //                button.onclick(null);
+            //            }
+            //        }
+            //    });
+            /**/
         }
         IsInputElement(arg) {
             return arg !== null &&
