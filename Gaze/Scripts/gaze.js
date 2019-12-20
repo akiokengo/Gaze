@@ -11820,7 +11820,6 @@ var Gaze;
     }
     Gaze.DotElementParser = DotElementParser;
 })(Gaze || (Gaze = {}));
-//# sourceMappingURL=DotElementParser.js.map
 /** WebGazer.js: Scalable Webcam EyeTracking Using User Interactions 
  * 
  * Copyright (c) 2016-2019, Brown HCI Group 
@@ -22553,7 +22552,7 @@ function store_points(x, y, k) {
 
 
     var pMedian = new Gaze.Median(1 /* 中央値をとるためのサンプル数 */);
-    var dotParser = new Gaze.DotElementParser(5 * 1000 /* msec */, 20 /* 回で検知 */);
+    var dotParser = new Gaze.DotElementParser(5 * 1000 /* msec */, 19 /* 回で検知 */);
     function loop() {
 
         if (!paused) {
