@@ -11820,6 +11820,7 @@ var Gaze;
     }
     Gaze.DotElementParser = DotElementParser;
 })(Gaze || (Gaze = {}));
+//# sourceMappingURL=DotElementParser.js.map
 /** WebGazer.js: Scalable Webcam EyeTracking Using User Interactions 
  * 
  * Copyright (c) 2016-2019, Brown HCI Group 
