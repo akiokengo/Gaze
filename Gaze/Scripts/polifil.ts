@@ -68,12 +68,26 @@ function GetUserMedia(
             if (x == 0) {
                 dfd.reject("読み込めませんでした");
             } else {
+
+                //setTimeout(() => {
+                //    GetUserMedia(x - 1, constraints)
+                //        .done(y => {
+                //            dfd.resolve(y);
+                //        }).fail(y => {
+                //            dfd.reject("読み込めませんでした");
+                //        });
+
+
+                //}, 10);
+
+
                 GetUserMedia(x - 1, constraints)
                     .done(y => {
                         dfd.resolve(y);
                     }).fail(y => {
                         dfd.reject("読み込めませんでした");
-                    })
+                    });
+
             }
         });
 
