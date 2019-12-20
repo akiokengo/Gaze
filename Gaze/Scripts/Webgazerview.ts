@@ -22,7 +22,7 @@
             }
             if (learnbtn) {
                 learnbtn.onclick = e => {
-                    location.href = "index.html?b=true";
+                     location.href = "index.html?b=true";
 
 
                 }
